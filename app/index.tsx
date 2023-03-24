@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Button onPress={linkList} title="Listar Serviços"></Button>
+      <Button onPress={linkList} title="Listar Serviços" ></Button>
       <Button onPress={linkRegister} title="Cadastrar"></Button>
       <StatusBar style="auto" />
     </View>
@@ -32,5 +32,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  Button: {
+    margin: '20px',
   },
 });
