@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Button, Image, Alert } from 'react-native';
 
 export default function App() {
     const router = useRouter();
@@ -13,8 +13,15 @@ export default function App() {
             pathname: "/list"
         });
     }
+
+    const confirmation = () => {
+        Alert.alert('Cadastrado');
+
+    }
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
+            <Image style={styles.img} source={require('../../assets/logo.png')} />
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeText1}
@@ -31,8 +38,8 @@ export default function App() {
                 placeholder="Preço"
                 value={number}
                 keyboardType="numeric" />
-            <Button onPress={cadastra} title="Cadastrar"></Button>
-        </SafeAreaView>
+            <Button onPress={confirmation} title="Cadastrar" color='#000000'></Button>
+        </SafeAreaView >
     );
 }
 
@@ -46,8 +53,18 @@ const styles = StyleSheet.create({
 
     input: {
         height: 40,
+        width: 250,
         margin: 12,
         borderWidth: 1,
         padding: 10,
-    }
+    },
+
+    img: {
+        width: 100,
+        height: 100,
+    },
+
+    bt: {
+        backgroundColor: '#fff',
+    },
 });
