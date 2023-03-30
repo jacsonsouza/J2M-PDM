@@ -25,12 +25,6 @@ export default function App() {
             <Header title='LISTAR SERVIÇOS'/>
             <Text>Serviços</Text>
             <StatusBar style="auto" />
-            <View style={styles.navBar}>
-              <NavBarButton onPress={linkRegister} icon={"add-outline"} title="ADICIONAR"/>
-              <NavBarButton onPress={linkList} icon={"list-outline"} title="LISTAR"/>
-              <NavBarButton onPress={linkList} icon={"people-circle-outline"} title="CLIENTES"/>
-              <NavBarButton onPress={linkList} icon={"ribbon-outline"} title="GARANTIAS"/>
-            </View>
         </View>
     );
 }

@@ -27,21 +27,16 @@ export default function App() {
       <StatusBar style="auto" />
         <Header title="ORDENS DE SERVIÇO"/>
         <ScrollView style={styles.viewMain}>
-          <CardService serviceNumber={"001"} client={'Primeiro Cliente'} description={'Serviço de Manutenção'} date={"27/03/2023"} />
+          <CardService serviceNumber={"001"} client={'Primeiro Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} date={"27/03/2023"} />
+          <CardService serviceNumber={"002"} client={'Segundo Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} date={"30/03/2023"} />
         </ScrollView>
-        <View style={styles.navBar}>
-          <NavBarButton onPress={linkRegister} icon={"add-outline"} title="ADICIONAR"/>
-          <NavBarButton onPress={linkList} icon={"list-outline"} title="LISTAR"/>
-          <NavBarButton onPress={linkList} icon={"people-circle-outline"} title="CLIENTES"/>
-          <NavBarButton onPress={linkList} icon={"ribbon-outline"} title="GARANTIAS"/>
-        </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#7c7d7c',
+    backgroundColor: '#d4d4d4',
     alignItems: 'center',
     height: '100%'
   },

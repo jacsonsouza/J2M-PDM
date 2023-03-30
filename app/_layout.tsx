@@ -26,6 +26,10 @@ const Screens: ScreenProps = {
     label: "Clientes",
     icon: "people-circle",
   },
+  "guarantee/index": {
+    label: "Garantias",
+    icon: "ribbon",
+  },
 };
 
 export default function DefaultLayout() {
@@ -43,7 +47,7 @@ export default function DefaultLayout() {
             );
           },
           tabBarLabelStyle: {
-            fontSize: 15,
+            fontSize: 12,
             color: '#4b4b4b',
             fontFamily: 'monospace',
             fontWeight: 'bold'
