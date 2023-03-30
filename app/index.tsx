@@ -70,4 +70,7 @@ const styles = StyleSheet.create({
     padding: 5, 
     marginBottom: 90
   },
+  Button: {
+    margin: '20px',
+  },
 });
