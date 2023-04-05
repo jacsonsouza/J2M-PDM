@@ -1,14 +1,62 @@
-import { Text, View, TouchableOpacity } from 'react-native';
-import React from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { View, Button, StyleSheet, TouchableOpacity, Text } from "react-native";
 
-export default function ButtonIcon({ onPress, icon }: { onPress: any, icon: any }) {
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+const ButtonIcon = ({
+  onPress,
+  icon,
+  colorIcon,
+  colorButton,
+  widthButton,
+  size
+}: {
+  onPress: any;
+  icon: any;
+  colorIcon: any;  
+  colorButton: any;  
+  widthButton: any;  
+  size: any;  
+}) => {
+
+    const colorStyles = {
+        backgroundColor: colorButton,
+        width: widthButton,
+      }
 
     return (
-        <View>
-            <TouchableOpacity onPress={onPress}>
-                <Ionicons name={icon} size={32} color="#4b4b4b" />
-            </TouchableOpacity>
-        </View>
-    );
+        <TouchableOpacity onPress={onPress} style={[styles.appButtonContainer, colorStyles]}>
+            <Text style={styles.appButtonText}>
+            <Ionicons
+                name={icon}
+                color={colorIcon}
+                size={size}
+            />
+            </Text>
+        </TouchableOpacity>
+    )
 }
+
+
+ButtonIcon.defaultProps = {
+    widthButton: 50,
+    size: 20,
+  };
+
+export default ButtonIcon;
+
+const styles = StyleSheet.create({
+  appButtonText: {
+    fontSize: 20,
+    color: "#fff",
+    fontFamily: "monospace",
+  },
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#4b4b4b",
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    alignItems: "center",
+  },
+});
+

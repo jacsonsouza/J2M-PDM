@@ -6,23 +6,30 @@ import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import NavBarButton from '../components/NavBarButton';
 import CardService from '../components/CardService';
+import DatePickerApp from '../components/DatePickerApp';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Header title="ORDENS DE SERVIÇO" />
-      <ScrollView style={styles.viewMain}>
-        <CardService serviceNumber={"001"} client={'Primeiro Cliente'} description={'Serviço de Manutenção'} date={"27/03/2023"} />
-      </ScrollView>
+
+        <Header title="ORDENS DE SERVIÇO"/>
+        
+        <DatePickerApp/>
+        
+        <ScrollView style={styles.viewMain}>
+          <CardService borderColor={"finish"} onPress={linkList} serviceNumber={"001"} client={'Primeiro Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} date={"27/03/2023"} />
+          <CardService borderColor={"progress"} onPress={linkList} serviceNumber={"002"} client={'Segundo Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} date={"30/03/2023"} />
+          <CardService borderColor={"canceled"} onPress={linkList} serviceNumber={"002"} client={'Segundo Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} date={"30/03/2023"} />
+        </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#7c7d7c',
+    backgroundColor: '#d4d4d4',
     alignItems: 'center',
     height: '100%'
   },
@@ -48,8 +55,10 @@ const styles = StyleSheet.create({
   },
   viewMain: {
     width: '100%',
-    padding: 5,
-    marginBottom: 90
+
+    padding: 5, 
+    marginBottom: 30
+
   },
   Button: {
     margin: '20px',

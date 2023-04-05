@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, TextInput, Button } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import ButtonIcon from "./ButtonIcon";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -49,7 +49,9 @@ const DatePickerApp = () => {
       <TextInput style={styles.datePickerTextInput} value={text} />
       <ButtonIcon
         onPress={() => showMode("date")}
-        icon={"calendar"}
+        icon="calendar"
+        colorIcon="#fff"
+        colorButton="#4b4b4b"
       />
       {show && (
         <DateTimePicker
@@ -69,16 +71,14 @@ export default DatePickerApp;
 const styles = StyleSheet.create({
   datePicker: {
     flexDirection: "row",
-    margin: 10,
   },
   datePickerTextInput: {
     backgroundColor: "#fff",
+    borderRadius: 5,
     fontSize: 12,
     padding: 2,
-    marginRight: 3,
     textAlign: "center",
-    width: 200,
-    borderRadius: 10,
+    width: '80%',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

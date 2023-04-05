@@ -20,13 +20,15 @@ export default function App() {
     });
   }
 
-  return (
-    <View style={styles.container}>
-      <Header title='LISTAR SERVIÇOS' />
-      <Text>Serviços</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+    return (
+        <View style={styles.container}>
+            <Header title='LISTAR SERVIÇOS'/>
+            <Text>Serviços</Text>
+            <StatusBar style="auto" />
+        </View>
+    );
+
 }
 
 const styles = StyleSheet.create({
