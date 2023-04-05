@@ -15,16 +15,16 @@ const Screens: ScreenProps = {
     icon: "home",
   },
   "list/index": {
-    label: "Listar",
-    icon: "list",
+    label: "Pesquisar",
+    icon: "search",
   },
   "register/index": {
     label: "Adicionar",
     icon: "add-circle",
   },
-  "client/index": {
-    label: "Clientes",
-    icon: "people-circle",
+  "guarantee/index": {
+    label: "Garantias",
+    icon: "ribbon",
   },
 };
 
@@ -43,9 +43,8 @@ export default function DefaultLayout() {
             );
           },
           tabBarLabelStyle: {
-            fontSize: 15,
-            color: '#4b4b4b',
-            fontFamily: 'monospace',
+            fontSize: 12,
+            color: '#7c7d7c',
             fontWeight: 'bold'
           },
           tabBarStyle: {

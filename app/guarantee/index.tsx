@@ -1,29 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
-
+import { StyleSheet, Text, View, Button, Platform, TextInput, ScrollView } from 'react-native';
 import Header from '../../components/Header';
-import NavBarButton from '../../components/NavBarButton';
+import CardGuarantee from '../../components/CardGuarantee';
+import DatePickerApp from '../../components/DatePickerApp';
 
-export default function App() {
-    const router = useRouter();
-
-  const linkList = () => {
-    router.push({
-      pathname: "/list"
-    });
-  }
-
-  const linkRegister = () => {
-    router.push({
-      pathname: "/register"
-    });
-  }
-
+export default function Guarantee() {
     return (
         <View style={styles.container}>
-            <Header title='LISTAR SERVIÇOS'/>
-            <Text>Garantias</Text>
+            <Header title='GARANTIAS EM VIGOR'/>
+            
+            <DatePickerApp/>
+
+            <ScrollView style={styles.viewMain}>
+              <CardGuarantee serviceNumber={"001"} client={'Primeiro Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} dateService={"27/03/2023"} dateEndGuarantee={"27/04/2023"} daysRemaining={"28"} />
+              <CardGuarantee serviceNumber={"002"} client={'Segundo Cliente'} description={'Serviço de Manutenção realizado na máquina 02345, de acordo com a autorização do cliente.'} dateService={"31/03/2023"} dateEndGuarantee={"10/04/2023"} daysRemaining={"10"}/>
+            </ScrollView>
             <StatusBar style="auto" />
         </View>
     );
@@ -31,7 +22,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
     container: {
-      backgroundColor: '#7c7d7c',
+      backgroundColor: '#d4d4d4',
       alignItems: 'center',
       height: '100%'
     },
@@ -65,6 +56,6 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       borderLeftWidth: 10,
       borderLeftColor: '#4b4b4b'
-    }
+    },
   });
   
