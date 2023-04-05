@@ -11,7 +11,7 @@ type ScreenProps = {
 
 const Screens: ScreenProps = {
   index: {
-    label: "Home",
+    label: "Início",
     icon: "home",
   },
   "list/index": {
@@ -22,6 +22,11 @@ const Screens: ScreenProps = {
     label: "Adicionar",
     icon: "add-circle",
   },
+  "list/index": {
+    label: "Listar",
+    icon: "list",
+  },
+
   "guarantee/index": {
     label: "Garantias",
     icon: "ribbon",
@@ -49,7 +54,7 @@ export default function DefaultLayout() {
           },
           tabBarStyle: {
             backgroundColor: "#fff",
-            borderRightWidth: 0.5
+            height: 60,
           },
           tabBarLabel: Screens[route.name]?.label,
         };

@@ -1,13 +1,11 @@
 import { View, StyleSheet, Image, Text } from "react-native";
-import { Link } from "expo-router";
 
-const AppButton = ({title} : {title:any}) => (
+const AppButton = () => (
   <View style={styles.header}>
     <Image
-        style={styles.logo}
-        source={require('../src/img/logo.png')}
-      />    
-      <Text style={styles.titleHeader}>{title}</Text>
+      style={styles.logo}
+      source={require('../src/img/logo.png')}
+    />
   </View>
 );
 
@@ -47,4 +45,3 @@ const styles = StyleSheet.create({
   },
 });
 
-     

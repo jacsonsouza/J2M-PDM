@@ -8,24 +8,12 @@ import NavBarButton from '../components/NavBarButton';
 import CardService from '../components/CardService';
 import DatePickerApp from '../components/DatePickerApp';
 
+
 export default function App() {
-  const router = useRouter();
-
-  const linkList = () => {
-    router.push({
-      pathname: "/list"
-    });
-  }
-
-  const linkRegister = () => {
-    router.push({
-      pathname: "/register"
-    });
-  }
-
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+
         <Header title="ORDENS DE SERVIÇO"/>
         
         <DatePickerApp/>
@@ -57,18 +45,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
-    position: 'absolute', 
-    left: 0, 
+    position: 'absolute',
+    left: 0,
     right: 0,
     bottom: 0
   },
   navBarLink: {
     color: 'row'
   },
-  viewMain:{
+  viewMain: {
     width: '100%',
+
     padding: 5, 
     marginBottom: 30
+
   },
   Button: {
     margin: '20px',

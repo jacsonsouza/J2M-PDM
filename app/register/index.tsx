@@ -1,53 +1,63 @@
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
+import DatePickerApp from '../../components/DatePickerApp';
+import ButtonApp from "../../components/ButtonApp";
+import Header from '../../components/Header';
+import React, { useState } from 'react';
+import MaskInput, { Masks } from 'react-native-mask-input';
+import { StyleSheet, SafeAreaView, TextInput, Alert } from 'react-native';
+
 
 export default function App() {
-    const router = useRouter();
-    const [text1, onChangeText1] = React.useState('');
-    const [text2, onChangeText2] = React.useState('');
-    const [number, onChangeNumber] = React.useState('');
-    const cadastra = () => {
-        router.push({
-            pathname: "/list"
-        });
+    const [client, setClient] = React.useState('');
+    const [service, setService] = React.useState('');
+    const [currencyBrl, setCurrencyBrl] = React.useState('');
+
+    const confirmation = () => {
+        Alert.alert('Cadastrado');
+
     }
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
+            <Header />
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeText1}
+                onChangeText={setClient}
                 placeholder="Cliente"
-                value={text1} />
+                value={client} />
             <TextInput
                 style={styles.input}
-                onChangeText={onChangeText2}
+                onChangeText={setService}
                 placeholder="Serviço"
-                value={text2} />
-            <TextInput
+                value={service} />
+            <MaskInput
+                value={currencyBrl}
+                onChangeText={setCurrencyBrl}
+                mask={Masks.BRL_CURRENCY}
                 style={styles.input}
-                onChangeText={onChangeNumber}
-                placeholder="Preço"
-                value={number}
-                keyboardType="numeric" />
-            <Button onPress={cadastra} title="Cadastrar"></Button>
-        </SafeAreaView>
+                keyboardType='numeric'
+            />
+            <DatePickerApp />
+            <ButtonApp onPress={confirmation} title="Cadastrar" />
+        </SafeAreaView >
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#d4d4d4',
         alignItems: 'center',
-        justifyContent: 'center',
     },
 
     input: {
         height: 40,
+        width: 250,
         margin: 12,
         borderWidth: 1,
         padding: 10,
-    }
+        borderRadius: 10,
+        backgroundColor: 'white'
+    },
 });
