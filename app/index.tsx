@@ -21,7 +21,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <Header title="ORDENS DE SERVIÇO" />
+      <Header />
 
       <DatePickerApp />
 
