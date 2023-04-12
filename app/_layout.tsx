@@ -22,9 +22,9 @@ const Screens: ScreenProps = {
     label: "Adicionar",
     icon: "add-circle",
   },
-  "list/index": {
-    label: "Listar",
-    icon: "list",
+  "search/index": {
+    label: "Pesquisar",
+    icon: "search",
   },
 
   "guarantee/index": {
@@ -49,8 +49,8 @@ export default function DefaultLayout() {
           },
           tabBarLabelStyle: {
             fontSize: 12,
-            color: '#7c7d7c',
-            fontWeight: 'bold'
+            color: "#7c7d7c",
+            fontWeight: "bold",
           },
           tabBarStyle: {
             backgroundColor: "#fff",
