@@ -3,8 +3,12 @@ import { StyleSheet, View, TextInput } from "react-native";
 import ButtonIcon from "./ButtonIcon";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const DatePickerApp = () => {
-  const [date, setDate] = useState(new Date());
+interface DatePickerAppProps {
+  date: Date;
+  setDate: Function;
+}
+
+const DatePickerApp = ({ date, setDate }: DatePickerAppProps) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [text, setText] = useState("Selecione uma data");
@@ -14,26 +18,11 @@ const DatePickerApp = () => {
     setShow(false);
     setDate(currentDate);
 
-    var months = [
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
-      "07",
-      "08",
-      "09",
-      "10",
-      "11",
-      "12",
-    ];
-
     let tempDate = new Date(currentDate);
     let fDate =
       tempDate.getDate() +
       "/" +
-      months[tempDate.getUTCMonth()] +
+      (tempDate.getUTCMonth() + 1) +
       "/" +
       tempDate.getFullYear();
     setText(fDate);
@@ -78,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     padding: 2,
     textAlign: "center",
-    width: '80%',
+    width: "80%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

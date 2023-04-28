@@ -1,20 +1,23 @@
+import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   View,
+  Image,
   FlatList,
   RefreshControl,
-  Image,
 } from "react-native";
-import Header from "../components/Header";
-import CardService from "../components/CardService";
-import DatePickerApp from "../components/DatePickerApp";
-import Services from "../types/Services";
-import useCollection from "../hooks/useCollection";
-import React from "react";
+import DatePickerApp from "../../components/DatePickerApp";
+import CardWarranty from "../../components/CardWarranty";
+import Header from "../../components/Header";
+import Services from "../../types/Services";
+import moment from "moment";
+import { useState } from "react";
 
-export default function App() {
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [date, setDate] = React.useState(new Date());
+import useCollection from "../../hooks/useCollection";
+
+export default function Guarantee() {
+  const [date, setDate] = useState(new Date());
+  const [refreshing, setRefreshing] = useState(false);
 
   const { loading, data, refreshData } = useCollection<Services>("services");
 
@@ -22,10 +25,7 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Header />
-        <Image
-          style={styles.loading}
-          source={require("../assets/img/loading.gif")}
-        />
+        <Image source={require("../../assets/img/loading.gif")} />
       </View>
     );
 
@@ -34,8 +34,6 @@ export default function App() {
     refreshData();
     setRefreshing(false);
   };
-
-  const linkList = () => {};
 
   return (
     <View style={styles.container}>
@@ -49,18 +47,19 @@ export default function App() {
         }
         data={data}
         renderItem={({ item }) => (
-          <CardService
-            borderColor={item.status}
-            onPress={linkList}
+          <CardWarranty
             serviceNumber={item.serviceNumber}
-            client={item?.client}
-            description={item?.description}
-            price={item.price}
-            date={item?.dateStart}
+            client={item.client}
+            description={item.description}
+            dateEndWarranty={moment(item.dateStart).add(
+              item.daysWarranty,
+              "days"
+            )}
           />
         )}
         style={{ width: "100%", marginTop: 12 }}
       />
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -93,13 +92,13 @@ const styles = StyleSheet.create({
   },
   viewMain: {
     width: "100%",
-
     padding: 5,
-    marginBottom: 30,
   },
-  loading: {
-    alignSelf: "center",
-    height: 160,
-    margin: 5,
+  cardServico: {
+    backgroundColor: "#f0f0f0",
+    width: "100%",
+    borderRadius: 5,
+    borderLeftWidth: 10,
+    borderLeftColor: "#4b4b4b",
   },
 });

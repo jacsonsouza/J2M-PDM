@@ -1,6 +1,10 @@
-import { Tabs } from "expo-router";
-
+import { SplashScreen, Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+
+import useFirebase from "../hooks/useFirebase";
+import firebaseConfig from "../config/firebaseConfig";
+
+import "moment/locale/pt-br";
 
 type ScreenProps = {
   [key: string]: {
@@ -26,14 +30,23 @@ const Screens: ScreenProps = {
     label: "Pesquisar",
     icon: "search",
   },
-
-  "guarantee/index": {
+  "warranty/index": {
     label: "Garantias",
     icon: "ribbon",
+  },
+  "login/index": {
+    label: "Login",
+    icon: "person",
   },
 };
 
 export default function DefaultLayout() {
+  const firebaseApp = useFirebase(firebaseConfig);
+
+  if (!firebaseApp) {
+    return <SplashScreen />;
+  }
+
   return (
     <Tabs
       screenOptions={({ route }) => {
