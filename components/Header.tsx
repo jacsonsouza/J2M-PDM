@@ -18,14 +18,16 @@ const AppButton = () => {
   return (
     <View style={styles.header}>
       <Image style={styles.logo} source={require("../src/img/logo.png")} />
-      <ButtonIcon
-        onPress={handleLogout}
-        icon={"log-out"}
-        colorIcon="black"
-        colorButton="white"
-        widthButton={50}
-        size={30}
-      />
+      <View style={{ alignSelf: "center" }}>
+        <ButtonIcon
+          onPress={handleLogout}
+          icon={"log-out"}
+          colorIcon="black"
+          colorButton="white"
+          widthButton={50}
+          size={30}
+        />
+      </View>
     </View>
   );
 };
@@ -36,7 +38,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#fff",
     width: "100%",
-    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 10,
     height: "auto",
     shadowColor: "#000",

@@ -33,18 +33,24 @@ export default function index() {
         onChangeText={setEmail}
         placeholder="E-mail"
         value={email}
+        autoCapitalize="none"
+        inputMode="email"
       />
       <TextInput
         style={styles.input}
         onChangeText={setPassword}
         placeholder="Senha"
         value={password}
+        autoCapitalize="none"
+        secureTextEntry={true}
       />
       <TextInput
         style={styles.input}
         onChangeText={setConfrirmPass}
         placeholder="Confirme sua senha"
         value={confirmPass}
+        autoCapitalize="none"
+        secureTextEntry={true}
       />
       <View style={{ flexDirection: "row" }}>
         <Text>Já tem uma conta? </Text>

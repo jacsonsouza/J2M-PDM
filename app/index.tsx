@@ -10,11 +10,11 @@ export default function index() {
 
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      await login(email, senha);
+      await login(email, password);
       router.push("/home");
     } catch (e) {
       console.log("Erros! ", e);
@@ -32,12 +32,16 @@ export default function index() {
         onChangeText={setEmail}
         placeholder="E-mail"
         value={email}
+        autoCapitalize="none"
+        inputMode="email"
       />
       <TextInput
         style={styles.input}
-        onChangeText={setSenha}
+        onChangeText={setPassword}
         placeholder="Senha"
-        value={senha}
+        value={password}
+        autoCapitalize="none"
+        secureTextEntry={true}
       />
       <View style={{ flexDirection: "row" }}>
         <Text>Não tem uma conta? </Text>
