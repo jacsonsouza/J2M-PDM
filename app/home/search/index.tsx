@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import Header from "../../components/Header";
-import ButtonIcon from "../../components/ButtonIcon";
+import Header from "../../../components/Header";
+import ButtonIcon from "../../../components/ButtonIcon";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function index() {

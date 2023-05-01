@@ -4,20 +4,28 @@ import { useRouter } from "expo-router";
 import useAuth from "../hooks/useAuth";
 
 const AppButton = () => {
-  // const { user, logout } = useAuth();
-  // const router = useRouter();
+  const { logout } = useAuth();
+  const router = useRouter();
 
-  // const logOut = async () => {
-  //   try {
-  //     await logout();
-  //     router.push("/login");
-  //   } catch (e) {
-  //     console.log("Erros: " + e);
-  //   }
-  // };
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push("../");
+    } catch (e) {
+      console.log("Erros: " + e);
+    }
+  };
   return (
     <View style={styles.header}>
       <Image style={styles.logo} source={require("../src/img/logo.png")} />
+      <ButtonIcon
+        onPress={handleLogout}
+        icon={"log-out"}
+        colorIcon="black"
+        colorButton="white"
+        widthButton={50}
+        size={30}
+      />
     </View>
   );
 };
@@ -38,10 +46,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-  },
-  itens: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   logo: {
     alignSelf: "center",

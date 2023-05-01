@@ -1,22 +1,28 @@
 import { StyleSheet, SafeAreaView, TextInput, Alert, View } from "react-native";
+import DatePickerApp from "../../../components/DatePickerApp";
 import MaskInput, { Masks } from "react-native-mask-input";
-import DatePickerApp from "../../components/DatePickerApp";
 import NumericInput from "react-native-numeric-input";
-import ButtonApp from "../../components/ButtonApp";
-import Header from "../../components/Header";
-import Services from "../../types/Services";
+import ButtonApp from "../../../components/ButtonApp";
+import Header from "../../../components/Header";
+import Services from "../../../types/Services";
 import { useState } from "react";
 
-import useCollection from "../../hooks/useCollection";
+import useCollection from "../../../hooks/useCollection";
+import useAuth from "../../../hooks/useAuth";
+import { useRouter } from "expo-router";
 
 export default function App() {
+  const { user } = useAuth();
+  const { data, create, refreshData } = useCollection<Services>(
+    "services-" + user?.uid
+  );
+
   const [client, setClient] = useState("");
   const [description, setDescription] = useState("");
   const [currencyBrl, setCurrencyBrl] = useState("");
   const [days, setDays] = useState(0);
   const [datePicker, setDate] = useState(new Date());
-
-  const { data, create, refreshData } = useCollection<Services>("services");
+  const router = useRouter();
 
   const confirmation = async () => {
     await create({
@@ -30,7 +36,7 @@ export default function App() {
     });
 
     Alert.alert("Serviço cadastrado!");
-    refreshData(); //talvez mover para cima
+    router.push("/");
   };
 
   return (

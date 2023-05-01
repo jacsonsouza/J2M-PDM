@@ -1,23 +1,24 @@
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
-import React, { useState } from "react";
-import useAuth from "../hooks/useAuth";
-import Header from "../components/Header";
-import ButtonApp from "../components/ButtonApp";
+import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import ButtonApp from "../../components/ButtonApp";
 import { Link, useRouter } from "expo-router";
 
 export default function index() {
-  const { login, user } = useAuth();
+  const { login, newUser } = useAuth();
 
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfrirmPass] = useState("");
 
   const handleLogin = async () => {
     try {
-      await login(email, senha);
+      await newUser(email, password);
+      await login(email, password);
       router.push("/home");
-    } catch (e) {
-      console.log("Erros! ", e);
+    } catch (error) {
+      console.log("Erros: " + error);
     }
   };
 
@@ -25,7 +26,7 @@ export default function index() {
     <View style={styles.container}>
       <Image
         style={styles.imgLogo}
-        source={require("../assets/img/logo.png")}
+        source={require("../../assets/img/logo.png")}
       />
       <TextInput
         style={styles.input}
@@ -35,23 +36,26 @@ export default function index() {
       />
       <TextInput
         style={styles.input}
-        onChangeText={setSenha}
+        onChangeText={setPassword}
         placeholder="Senha"
-        value={senha}
+        value={password}
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={setConfrirmPass}
+        placeholder="Confirme sua senha"
+        value={confirmPass}
       />
       <View style={{ flexDirection: "row" }}>
-        <Text>Não tem uma conta? </Text>
-        <Link href={"/userRegister"} style={{ color: "blue" }}>
-          Cadastre-se
+        <Text>Já tem uma conta? </Text>
+        <Link href={"../"} style={{ color: "blue" }}>
+          Entre
         </Link>
       </View>
-      <ButtonApp onPress={handleLogin} title={"Entrar"} />
-
-      <Text>{user?.email}</Text>
+      <ButtonApp onPress={handleLogin} title={"Cadastrar"} />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
