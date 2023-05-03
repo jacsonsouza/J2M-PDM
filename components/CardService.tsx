@@ -1,47 +1,51 @@
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, PressableProps } from "react-native";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ButtonIcon from "./ButtonIcon";
+import moment from "moment";
 
-const AppButton = ({
+interface CardServiceProps {
+  serviceNumber: number;
+  client: string;
+  description: string;
+  price: string;
+  date: string;
+  onPress: Function;
+  borderColor: string;
+}
+
+const CardService = ({
   serviceNumber,
   client,
   description,
+  price,
   date,
   onPress,
-  borderColor
-}: {
-  serviceNumber: any;
-  client: any;
-  description: any;
-  date: any;
-  onPress: any;
-  borderColor: any;
-}) => {
-
+  borderColor,
+}: CardServiceProps) => {
   type StatusProps = {
     [key: string]: {
       color: string;
     };
   };
 
-  const StatusColors : StatusProps = {
-    'finish' : { color: "green"},
-    'progress' : { color: "#448bfc"},
-    'canceled' : { color: "red"},
-  }
+  const StatusColors: StatusProps = {
+    finished: { color: "green" },
+    progress: { color: "#448bfc" },
+    canceled: { color: "red" },
+  };
 
   const colorStyles = {
-    borderColor: StatusColors[borderColor]?.color as any
+    borderColor: StatusColors[borderColor]?.color as string,
   };
 
   const colorTitle = {
-    color: StatusColors[borderColor]?.color as any
-  }
+    color: StatusColors[borderColor]?.color as string,
+  };
 
   return (
-    <View style={[styles.cardServico , colorStyles]}>
-      <Text style={[styles.title , colorTitle]}>#{serviceNumber}</Text>
+    <View style={[styles.cardServico, colorStyles]}>
+      <Text style={[styles.title, colorTitle]}>#{serviceNumber}</Text>
       <View style={styles.info}>
         <Text style={styles.date}>
           <Ionicons
@@ -50,14 +54,15 @@ const AppButton = ({
             color="#448bfc"
             size={18}
           />
-          {date}
+
+          {moment(date).format("L")}
         </Text>
 
         <Text style={styles.status}>
           <Ionicons name="checkmark" color="#fff" size={18} />
         </Text>
       </View>
-      <Text>
+      <Text style={styles.infoService}>
         <Ionicons
           style={styles.icon}
           name="people-circle-outline"
@@ -66,7 +71,11 @@ const AppButton = ({
         />
         {client}
       </Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.infoService}>
+        <Ionicons style={styles.icon} name="cash" color="#4b4b4b" size={18} />
+        {price}
+      </Text>
+      <Text style={styles.infoService}>{description}</Text>
       <View style={styles.rowButton}>
         <ButtonIcon
           onPress={onPress}
@@ -79,8 +88,8 @@ const AppButton = ({
 
         <ButtonIcon
           onPress={onPress}
-          icon="open-outline"
-          colorIcon="#4b4b4b"
+          icon="trash"
+          colorIcon="red"
           colorButton="#f0f0f0"
           widthButton={40}
           size={20}
@@ -90,12 +99,11 @@ const AppButton = ({
   );
 };
 
-
-AppButton.defaultProps = {
+CardService.defaultProps = {
   borderColor: "#969696",
 };
 
-export default AppButton;
+export default CardService;
 
 const styles = StyleSheet.create({
   cardServico: {
@@ -144,9 +152,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#43b060",
   },
-  description: {
+  infoService: {
     padding: 2,
-    marginTop: 5,
+    marginBottom: 5,
     textAlign: "justify",
     color: "#7a7a7a",
   },
