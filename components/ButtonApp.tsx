@@ -5,13 +5,13 @@ interface AppButtonProps {
   title: string;
 }
 
-const AppButton = ({ onPress, title }: AppButtonProps) => (
+const ButtonApp = ({ onPress, title }: AppButtonProps) => (
   <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>{title}</Text>
   </TouchableOpacity>
 );
 
-export default AppButton;
+export default ButtonApp;
 
 const styles = StyleSheet.create({
   appButtonText: {

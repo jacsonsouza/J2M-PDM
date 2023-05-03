@@ -22,7 +22,7 @@ export default function Warranty() {
 
   const { user } = useAuth();
   const { loading, data, refreshData } = useCollection<Services>(
-    "services-" + user?.uid
+    "users/" + user?.uid + "/services"
   );
 
   if (loading) {

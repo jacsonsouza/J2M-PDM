@@ -1,18 +1,20 @@
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
-import { useState } from "react";
-import useAuth from "../../hooks/useAuth";
 import ButtonApp from "../../components/ButtonApp";
 import { Link, useRouter } from "expo-router";
+import { useState } from "react";
+
+import useAuth from "../../hooks/useAuth";
 
 export default function index() {
   const { login, newUser } = useAuth();
 
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfrirmPass] = useState("");
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
       await newUser(email, password);
       await login(email, password);
@@ -58,7 +60,7 @@ export default function index() {
           Entre
         </Link>
       </View>
-      <ButtonApp onPress={handleLogin} title={"Cadastrar"} />
+      <ButtonApp onPress={handleRegister} title={"Cadastrar"} />
     </View>
   );
 }

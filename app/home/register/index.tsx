@@ -14,7 +14,7 @@ import { useRouter } from "expo-router";
 export default function App() {
   const { user } = useAuth();
   const { data, create, refreshData } = useCollection<Services>(
-    "services-" + user?.uid
+    "users/" + user?.uid + "/services"
   );
 
   const [client, setClient] = useState("");
@@ -25,6 +25,7 @@ export default function App() {
   const router = useRouter();
 
   const confirmation = async () => {
+    refreshData();
     await create({
       serviceNumber: data.length + 1,
       client: client,

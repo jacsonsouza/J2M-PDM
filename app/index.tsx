@@ -1,14 +1,15 @@
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
-import React, { useState } from "react";
-import useAuth from "../hooks/useAuth";
-import Header from "../components/Header";
 import ButtonApp from "../components/ButtonApp";
 import { Link, useRouter } from "expo-router";
+import React, { useState } from "react";
+
+import useAuth from "../hooks/useAuth";
 
 export default function index() {
   const { login, user } = useAuth();
 
   const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,10 +24,7 @@ export default function index() {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.imgLogo}
-        source={require("../assets/img/logo.png")}
-      />
+      <Image style={styles.logo} source={require("../assets/img/logo.png")} />
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
   },
-  imgLogo: {
+  logo: {
     height: 128,
     width: 128,
   },
