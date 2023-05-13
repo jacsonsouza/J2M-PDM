@@ -45,8 +45,12 @@ export default function App() {
       status: "trabalhando",
     });
 
-    Alert.alert("Serviço cadastrado!");
-    router.push("/");
+    Alert.alert("Serviço cadastrado!", "", [
+      {
+        text: "Ok",
+        onPress: () => router.push("/"),
+      },
+    ]);
   };
 
   return (
