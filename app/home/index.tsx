@@ -148,6 +148,22 @@ export default function App() {
     );
   };
 
+  const handleAlert = (service: Services) => {
+    Alert.alert("Atenção!", "Tem certeza que deseja apagar este serviço? ", [
+      {
+        text: "Cancelar",
+      },
+      {
+        text: "Sim",
+        onPress: async () => {
+          await remove(service.id + "");
+          Alert.alert("Serviço deletado!");
+          onRefresh();
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -166,11 +182,7 @@ export default function App() {
               handleShowModal();
               setModalService(item);
             }}
-            onPressDelete={async () => {
-              await remove(item.id + "");
-              Alert.alert("Serviço deletado!");
-              onRefresh();
-            }}
+            onPressDelete={() => handleAlert(item)}
             serviceNumber={item.serviceNumber}
             client={item?.client}
             description={item?.description}
