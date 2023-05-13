@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     width: "50%",
     alignItems: "center",
     margin: 20,
+    alignSelf: "center",
   },
 });

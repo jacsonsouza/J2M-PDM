@@ -11,7 +11,7 @@ import CardWarranty from "../../../components/CardWarranty";
 import Header from "../../../components/Header";
 import Services from "../../../types/Services";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
@@ -24,6 +24,10 @@ export default function Warranty() {
   const { loading, data, refreshData } = useCollection<Services>(
     "users/" + user?.uid + "/services"
   );
+
+  useEffect(() => {
+    refreshData();
+  }, [user]);
 
   if (loading) {
     return (
