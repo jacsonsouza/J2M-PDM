@@ -5,12 +5,13 @@ import ButtonIcon from "./ButtonIcon";
 import moment from "moment";
 
 interface CardServiceProps {
-  serviceNumber: number;
-  client: string;
-  description: string;
-  price: string;
-  date: string;
+  serviceNumber: number | undefined;
+  client: string | undefined;
+  description: string | undefined;
+  price: string | undefined;
+  date: string | undefined;
   onPress: Function;
+  onPressDelete: Function;
   borderColor: string;
 }
 
@@ -21,6 +22,7 @@ const CardService = ({
   price,
   date,
   onPress,
+  onPressDelete,
   borderColor,
 }: CardServiceProps) => {
   type StatusProps = {
@@ -30,9 +32,9 @@ const CardService = ({
   };
 
   const StatusColors: StatusProps = {
-    finished: { color: "green" },
-    progress: { color: "#448bfc" },
-    canceled: { color: "red" },
+    finalizado: { color: "green" },
+    trabalhando: { color: "#448bfc" },
+    cancelado: { color: "red" },
   };
 
   const colorStyles = {
@@ -87,7 +89,7 @@ const CardService = ({
         />
 
         <ButtonIcon
-          onPress={onPress}
+          onPress={onPressDelete}
           icon="trash"
           colorIcon="red"
           colorButton="#f0f0f0"

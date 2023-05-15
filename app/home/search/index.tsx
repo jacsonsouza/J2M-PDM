@@ -4,36 +4,32 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   SafeAreaView,
   FlatList,
 } from "react-native";
 import Header from "../../../components/Header";
 import ButtonIcon from "../../../components/ButtonIcon";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
+import useCollection from "../../../hooks/useCollection";
 import Services from "../../../types/Services";
 import CardService from "../../../components/CardService";
 
 export default function index() {
-  const { user, loading: loadingUser } = useAuth();
-  const {
-    data,
-    loading: loadingData,
-    refreshData,
-  } = useCollection<Services>("users/" + user?.uid + "/services");
+  const { user } = useAuth();
+  const { data, refreshData } = useCollection<Services>(
+    "users/" + user?.uid + "/services"
+  );
+
 
   useEffect(() => {
     refreshData();
   }, [user]);
 
-  const [search, setSearch] = React.useState("");
-  const [searchResult, setSearchResult] = React.useState<Array<Services>>([]);
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<Array<Services>>([]);
 
   const onSearch = () => {
     const result = data.filter((service) => {
-      console.log(service.client, search);
       return service.client
         .toLocaleLowerCase()
         .includes(search.toLocaleLowerCase().trim());
@@ -41,7 +37,7 @@ export default function index() {
     setSearchResult(result);
   };
 
-  if (loadingUser || loadingData) return <Text>Loading...</Text>;
+  //if (loadingUser || loadingData) return <Text>Loading...</Text>;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,7 +58,6 @@ export default function index() {
           size={30}
         />
       </View>
-
       <FlatList
         data={searchResult}
         renderItem={({ item }) => (
@@ -74,8 +69,11 @@ export default function index() {
             description={item?.description}
             price={item.price}
             date={item?.dateStart}
+            onPressDelete={() => {}}
           />
         )}
+        style={styles.flatlist}
+
       />
     </SafeAreaView>
   );
@@ -102,5 +100,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "white",
     margin: 5,
+  },
+
+  flatlist: {
+    width: "100%",
+    marginTop: 12,
   },
 });
