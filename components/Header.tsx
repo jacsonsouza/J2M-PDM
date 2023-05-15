@@ -17,7 +17,7 @@ const AppButton = () => {
   };
   return (
     <View style={styles.header}>
-      <Image style={styles.logo} source={require("../src/img/logo.png")} />
+      <Image style={styles.logo} source={require("../assets/img/logo.png")} />
       <View style={{ alignSelf: "center" }}>
         <ButtonIcon
           onPress={handleLogout}

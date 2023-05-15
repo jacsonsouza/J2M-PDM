@@ -43,14 +43,13 @@ export default function App() {
 
   const selectData = ["trabalhando", "finalizado", "cancelado"];
 
-
   if (loading) {
     return (
       <View style={styles.loading}>
         <Header />
         <Image
           style={styles.gif}
-          source={require("../../assets/img/loading.gif")}
+          source={require("../../assets/img/load.gif")}
         />
       </View>
     );
@@ -209,7 +208,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gif: {
-    height: 160,
+    height: 200,
+    width: 200,
     margin: 5,
   },
   flatlist: {
