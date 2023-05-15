@@ -20,6 +20,7 @@ export default function index() {
     "users/" + user?.uid + "/services"
   );
 
+
   useEffect(() => {
     refreshData();
   }, [user]);
@@ -35,6 +36,9 @@ export default function index() {
     });
     setSearchResult(result);
   };
+
+  //if (loadingUser || loadingData) return <Text>Loading...</Text>;
+
   return (
     <SafeAreaView style={styles.container}>
       <Header />
@@ -69,6 +73,7 @@ export default function index() {
           />
         )}
         style={styles.flatlist}
+
       />
     </SafeAreaView>
   );
