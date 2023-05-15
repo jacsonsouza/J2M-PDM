@@ -5,6 +5,7 @@ import {
   RefreshControl,
   Image,
   Modal,
+  Text,
 } from "react-native";
 import DatePickerApp from "../../components/DatePickerApp";
 import CardService from "../../components/CardService";
@@ -27,6 +28,7 @@ export default function App() {
   const [date, setDate] = useState(new Date());
   const [isVisible, setIsVisible] = useState(false);
   const [progess, setProgress] = useState("");
+  const [modalService, setModalService] = useState<Services | null>(null);
 
   if (loading) {
     return (
@@ -62,11 +64,16 @@ export default function App() {
         }}
       >
         <View style={styles.edit}>
-          <Input onChange={setProgress} nameInput="Progresso" value={progess} />
+          <Input
+            onChange={setProgress}
+            nameInput="Progresso"
+            value={modalService?.status + ""}
+          />
           <ButtonApp
             onPress={() => {
               console.log("Editado");
               setIsVisible(false);
+              setModalService(null);
             }}
             title="Editar"
           />
@@ -83,6 +90,7 @@ export default function App() {
             borderColor={item.status}
             onPress={() => {
               setIsVisible(true);
+              setModalService(item);
               setProgress("");
             }}
             serviceNumber={item.serviceNumber}
