@@ -33,7 +33,7 @@ export default function App() {
   const [datePicker, setDate] = useState(new Date());
   const router = useRouter();
 
-  const confirmation = async () => {
+  const handleRegister = async () => {
     refreshData();
     await create({
       serviceNumber: data.length + 1,
@@ -42,7 +42,7 @@ export default function App() {
       price: currencyBrl,
       dateStart: datePicker.toISOString(),
       daysWarranty: days,
-      status: "trabalhando",
+      status: "inProgress",
     });
 
     Alert.alert("Serviço cadastrado!", "", [
@@ -78,19 +78,16 @@ export default function App() {
             style={styles.inputText}
             keyboardType="numeric"
           />
-          <View style={styles.warranty}>
-            <Text>Garantia de </Text>
-            <NumericInput
-              type="up-down"
-              onChange={setDays}
-              minValue={0}
-              inputStyle={styles.inputNumeric}
-              containerStyle={{ marginBottom: 15 }}
-            />
-            <Text> dias</Text>
-          </View>
+          <Text>Garantia (em dias): </Text>
+          <NumericInput
+            type="up-down"
+            onChange={setDays}
+            minValue={0}
+            inputStyle={styles.inputNumeric}
+            containerStyle={{ marginBottom: 15 }}
+          />
           <DatePickerApp date={datePicker} setDate={setDate} />
-          <ButtonApp onPress={confirmation} title="Cadastrar" />
+          <ButtonApp onPress={handleRegister} title="Cadastrar" />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
@@ -114,11 +111,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: "white",
-  },
-  warranty: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
   inputWarranty: {
     height: 40,

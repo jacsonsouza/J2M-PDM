@@ -5,6 +5,9 @@ import {
   RefreshControl,
   Image,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Text,
 } from "react-native";
 import DatePickerApp from "../../components/DatePickerApp";
 import CardService from "../../components/CardService";
@@ -39,16 +42,14 @@ export default function App() {
 
   const [date, setDate] = useState(new Date());
 
-  const [modalService, setModalService] = useState<Services | null>(null);
-
-  const selectData = ["trabalhando", "finalizado", "cancelado"];
+  const selectOptions = ["inProgress", "finished", "canceled", "paused"];
 
   if (loading) {
     return (
-      <View style={styles.loading}>
+      <View style={styles.loadScreen}>
         <Header />
         <Image
-          style={styles.gif}
+          style={styles.gifLoad}
           source={require("../../assets/img/load.gif")}
         />
       </View>
@@ -61,90 +62,98 @@ export default function App() {
     setRefreshing(false);
   };
 
-  const handleShowModal = () => {
+  const handleShowModal = (service: Services) => {
     modal.show(
       <>
-        <View>
-          <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
-            <ButtonIcon
-              onPress={() => modal.hide()}
-              icon={"close"}
-              colorButton="red"
-              colorIcon="white"
-              widthButton={40}
-            />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
+              <ButtonIcon
+                onPress={() => modal.hide()}
+                icon={"close"}
+                colorButton="red"
+                colorIcon="white"
+                widthButton={40}
+              />
+            </View>
+            <KeyboardAwareScrollView>
+              <Formik
+                initialValues={{
+                  client: service.client,
+                  description: service.description,
+                  price: service.price,
+                  warranty: service.daysWarranty,
+                  status: service.status,
+                }}
+                onSubmit={async (values) => {
+                  const editService: Services = {
+                    client: values.client,
+                    description: values.description,
+                    serviceNumber: service.serviceNumber,
+                    price: values.price,
+                    dateStart: service.dateStart,
+                    daysWarranty: values.warranty,
+                    status: values.status,
+                  };
+                  await update(service.id + "", editService);
+                  Alert.alert("Serviço Editado!", "", [
+                    {
+                      text: "Ok",
+                      onPress: () => {
+                        modal.hide();
+                        onRefresh();
+                      },
+                    },
+                  ]);
+                }}
+              >
+                {({ handleChange, values, handleSubmit }) => (
+                  <>
+                    <Input
+                      onChange={handleChange("client")}
+                      nameInput="Cliente"
+                      value={values.client}
+                    />
+                    <Input
+                      onChange={handleChange("description")}
+                      nameInput="Descrição"
+                      value={values.description}
+                    />
+                    <MaskInput
+                      value={values.price}
+                      onChangeText={handleChange("price")}
+                      mask={Masks.BRL_CURRENCY}
+                      style={styles.input}
+                      keyboardType="numeric"
+                    />
+                    <Text style={{ alignSelf: "center" }}>
+                      Garantia (em dias):
+                    </Text>
+                    <NumericInput
+                      type="up-down"
+                      onChange={() => handleChange("warranty")}
+                      minValue={0}
+                      containerStyle={styles.inputNumber}
+                      value={values.warranty}
+                    />
+                    <SelectDropdown
+                      data={selectOptions}
+                      onSelect={handleChange("status")}
+                      defaultButtonText={values.status}
+                      buttonStyle={{
+                        borderStyle: "solid",
+                        borderRadius: 10,
+                        borderWidth: 2,
+                        alignSelf: "center",
+                      }}
+                    />
+                    <ButtonApp onPress={handleSubmit} title="Editar" />
+                  </>
+                )}
+              </Formik>
+            </KeyboardAwareScrollView>
           </View>
-          <KeyboardAwareScrollView>
-            <Formik
-              initialValues={{
-                client: modalService?.client,
-                description: modalService?.description,
-                price: modalService?.price,
-                warranty: modalService?.daysWarranty,
-                status: modalService?.status,
-              }}
-              onSubmit={() => {}}
-            >
-              {({ handleChange, values }) => (
-                <>
-                  <Input
-                    onChange={handleChange("client")}
-                    nameInput="Cliente"
-                    value={values.client}
-                  />
-                  <Input
-                    onChange={handleChange("description")}
-                    nameInput="Descrição"
-                    value={values.description}
-                  />
-                  <MaskInput
-                    value={values.price}
-                    onChangeText={handleChange("price")}
-                    mask={Masks.BRL_CURRENCY}
-                    style={styles.inputText}
-                    keyboardType="numeric"
-                  />
-                  <NumericInput
-                    type="up-down"
-                    onChange={() => handleChange("warranty")}
-                    minValue={0}
-                    containerStyle={{ marginBottom: 15, alignSelf: "center" }}
-                    value={values.warranty}
-                  />
-                  <SelectDropdown
-                    data={selectData}
-                    onSelect={handleChange("status")}
-                    defaultButtonText={values.status}
-                    buttonStyle={{
-                      borderStyle: "solid",
-                      borderRadius: 10,
-                      borderWidth: 2,
-                      alignSelf: "center",
-                    }}
-                  />
-                  <ButtonApp
-                    onPress={async () => {
-                      const editService: Services = {
-                        client: values.client,
-                        description: values.description,
-                        serviceNumber: modalService?.serviceNumber,
-                        price: values.price,
-                        dateStart: modalService?.dateStart,
-                        daysWarranty: values.warranty,
-                        status: values.status,
-                      };
-                      await update(modalService?.id + "", editService);
-                      Alert.alert("Serviço Editado!");
-                      modal.hide();
-                      onRefresh();
-                    }}
-                    title="Editar"
-                  />
-                </>
-              )}
-            </Formik>
-          </KeyboardAwareScrollView>
-        </View>
+        </TouchableWithoutFeedback>
       </>
     );
   };
@@ -169,7 +178,18 @@ export default function App() {
     <View style={styles.container}>
       <Header />
 
-      <DatePickerApp date={date} setDate={setDate} />
+      <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
+        <ButtonIcon
+          onPress={() => {}}
+          icon={"options"}
+          size={30}
+          widthButton={50}
+          colorButton="black"
+          colorIcon="white"
+        />
+      </View>
+
+      {/* <DatePickerApp date={date} setDate={setDate} /> */}
 
       <FlatList
         refreshControl={
@@ -179,10 +199,7 @@ export default function App() {
         renderItem={({ item }) => (
           <CardService
             borderColor={item.status}
-            onPress={() => {
-              handleShowModal();
-              setModalService(item);
-            }}
+            onPress={() => handleShowModal(item)}
             onPressDelete={() => handleAlert(item)}
             serviceNumber={item.serviceNumber}
             client={item?.client}
@@ -203,11 +220,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
   },
-  loading: {
+  loadScreen: {
     alignItems: "center",
     justifyContent: "center",
   },
-  gif: {
+  gifLoad: {
     height: 200,
     width: 200,
     margin: 5,
@@ -216,29 +233,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 12,
   },
-  modal: {
-    backgroundColor: "#d4d4d4",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-  },
-  edit: {
-    margin: 20,
-    justifyContent: "center",
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  inputText: {
+  input: {
     height: 40,
     width: 250,
     margin: 12,
@@ -246,5 +241,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     backgroundColor: "white",
+  },
+  inputNumber: {
+    marginTop: 5,
+    marginBottom: 15,
+    alignSelf: "center",
+    borderWidth: 2,
   },
 });
