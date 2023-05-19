@@ -34,7 +34,7 @@ export default function useAuth() {
     await signOut(getAuth());
   };
 
-  const newUser = async (email: string, password: string) => {
+  const register = async (email: string, password: string) => {
     await createUserWithEmailAndPassword(getAuth(), email, password);
   };
 
@@ -49,5 +49,5 @@ export default function useAuth() {
     });
   }, []);
 
-  return { loading, user, login, logout, newUser };
+  return { loading, user, login, logout, register };
 }

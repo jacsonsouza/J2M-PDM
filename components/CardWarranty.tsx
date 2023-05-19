@@ -3,9 +3,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import moment, { Moment } from "moment";
 
 interface CardWarrantyProps {
-  serviceNumber: number;
-  client: string;
-  description: string;
+  serviceNumber: number | undefined;
+  client: string | undefined;
+  description: string | undefined;
   dateEndWarranty: Moment;
 }
 

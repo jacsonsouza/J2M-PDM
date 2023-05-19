@@ -32,9 +32,10 @@ const CardService = ({
   };
 
   const StatusColors: StatusProps = {
-    finalizado: { color: "green" },
-    trabalhando: { color: "#448bfc" },
-    cancelado: { color: "red" },
+    finished: { color: "green" },
+    inProgress: { color: "#448bfc" },
+    canceled: { color: "red" },
+    paused: { color: "yellow" },
   };
 
   const colorStyles = {

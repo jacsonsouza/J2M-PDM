@@ -6,7 +6,7 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
 export default function index() {
-  const { login, newUser } = useAuth();
+  const { login, register } = useAuth();
 
   const router = useRouter();
 
@@ -16,7 +16,7 @@ export default function index() {
 
   const handleRegister = async () => {
     try {
-      await newUser(email, password);
+      await register(email, password);
       await login(email, password);
       router.push("/home");
     } catch (error) {
