@@ -14,11 +14,15 @@ import NumericInput from "react-native-numeric-input";
 import ButtonApp from "../../../components/ButtonApp";
 import Header from "../../../components/Header";
 import Services from "../../../types/Services";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
 import { useRouter } from "expo-router";
+import axios from "axios";
+import Brand from "../../../types/Brand";
+import SelectDropdown from "react-native-select-dropdown";
+import api from "../../../src/services/api";
 
 export default function App() {
   const { user } = useAuth();
@@ -26,9 +30,29 @@ export default function App() {
     "users/" + user?.uid + "/services"
   );
 
+  const [objectBrands, setObjectBrands] = useState<Brand[]>([]);
+
+  const stringBrands: string[] = [];
+
+  objectBrands.forEach((value) => {
+    stringBrands.push(value.nome);
+  });
+
+  useEffect(() => {
+    api
+      .get("/fipe/api/v1/carros/marcas")
+      .then((response) => {
+        setObjectBrands(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const [client, setClient] = useState("");
   const [description, setDescription] = useState("");
   const [currencyBrl, setCurrencyBrl] = useState("");
+  const [brand, setBrand] = useState("");
   const [days, setDays] = useState(0);
   const [datePicker, setDate] = useState(new Date());
   const router = useRouter();
@@ -44,7 +68,7 @@ export default function App() {
       daysWarranty: days,
       status: "inProgress",
     });
-
+    console.log(brand);
     Alert.alert("Serviço cadastrado!", "", [
       {
         text: "Ok",
@@ -78,6 +102,18 @@ export default function App() {
             style={styles.inputText}
             keyboardType="numeric"
           />
+          <SelectDropdown
+            search={true}
+            data={stringBrands}
+            onSelect={() => setBrand}
+            defaultButtonText={"Marcas"}
+            buttonStyle={{
+              borderStyle: "solid",
+              borderRadius: 10,
+              borderWidth: 2,
+              alignSelf: "center",
+            }}
+          />
           <Text>Garantia (em dias): </Text>
           <NumericInput
             type="up-down"
@@ -86,6 +122,7 @@ export default function App() {
             inputStyle={styles.inputNumeric}
             containerStyle={{ marginBottom: 15 }}
           />
+
           <DatePickerApp date={datePicker} setDate={setDate} />
           <ButtonApp onPress={handleRegister} title="Cadastrar" />
         </View>
