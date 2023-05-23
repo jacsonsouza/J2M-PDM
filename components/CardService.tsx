@@ -61,9 +61,10 @@ const CardService = ({
           {moment(date).format("L")}
         </Text>
 
-        <Text style={styles.status}>
-          <Ionicons name="checkmark" color="#fff" size={18} />
-        </Text>
+        <Text style={styles.price}>
+        <Ionicons style={styles.icon} name="cash" color="#4b4b4b" size={18} />
+        {price}
+      </Text>
       </View>
       <Text style={styles.infoService}>
         <Ionicons
@@ -74,11 +75,8 @@ const CardService = ({
         />
         {client}
       </Text>
-      <Text style={styles.infoService}>
-        <Ionicons style={styles.icon} name="cash" color="#4b4b4b" size={18} />
-        {price}
-      </Text>
-      <Text style={styles.infoService}>{description}</Text>
+      
+      <Text style={styles.description}>{description}</Text>
       <View style={styles.rowButton}>
         <ButtonIcon
           onPress={onPress}
@@ -110,8 +108,9 @@ export default CardService;
 
 const styles = StyleSheet.create({
   cardServico: {
+    margin: 5,
     backgroundColor: "#f0f0f0",
-    width: "100%",
+    width: "97%",
     borderRadius: 2,
     borderLeftWidth: 10,
     borderColor: "#969696",
@@ -138,7 +137,14 @@ const styles = StyleSheet.create({
   },
   date: {
     color: "#4b4b4b",
-    width: "100%",
+    width: "50%",
+    paddingLeft: 5
+  },
+  price: {
+    color: "#4b4b4b",
+    width: "50%",
+    textAlign: "right",
+    paddingRight: 5
   },
   icon: {
     marginRight: 5,
@@ -156,7 +162,8 @@ const styles = StyleSheet.create({
     borderColor: "#43b060",
   },
   infoService: {
-    padding: 2,
+    paddingLeft: 5,
+    paddingRight: 5,
     marginBottom: 5,
     textAlign: "justify",
     color: "#7a7a7a",
@@ -168,4 +175,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 3,
   },
+  description: {
+    paddingLeft: 5,
+    paddingRight: 5,
+    marginBottom: 5,
+    textAlign: "center",
+  }
 });

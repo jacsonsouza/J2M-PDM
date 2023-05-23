@@ -34,7 +34,6 @@ export default function App() {
   const router = useRouter();
 
   const handleRegister = async () => {
-    refreshData();
     await create({
       serviceNumber: data.length + 1,
       client: client,
@@ -44,8 +43,9 @@ export default function App() {
       daysWarranty: days,
       status: "inProgress",
     });
+    refreshData();
 
-    Alert.alert("Serviço cadastrado!", "", [
+    Alert.alert("Serviço cadastrado! ", "", [
       {
         text: "Ok",
         onPress: () => router.push("/"),
@@ -58,19 +58,22 @@ export default function App() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Header />
+          <Text style={styles.label}>Cliente</Text>
           <TextInput
             style={styles.inputText}
             onChangeText={setClient}
-            placeholder="Cliente"
+            placeholder="Nome do Cliente"
             value={client}
           />
+          <Text style={styles.label}>Serviço</Text>
           <TextInput
             style={styles.inputText}
             onChangeText={setDescription}
-            placeholder="Serviço"
+            placeholder="Descrição do serviço prestado"
             value={description}
             multiline={true}
           />
+          <Text style={styles.label}>Valor do serviço</Text>
           <MaskInput
             value={currencyBrl}
             onChangeText={setCurrencyBrl}
@@ -78,14 +81,20 @@ export default function App() {
             style={styles.inputText}
             keyboardType="numeric"
           />
-          <Text>Garantia (em dias): </Text>
-          <NumericInput
-            type="up-down"
-            onChange={setDays}
-            minValue={0}
-            inputStyle={styles.inputNumeric}
-            containerStyle={{ marginBottom: 15 }}
-          />
+          <Text style={styles.label}>Dias de Garantia</Text>
+          <View style={styles.warranty}>
+            <NumericInput
+              onChange={setDays}
+              minValue={0}
+              inputStyle={styles.inputNumeric}
+              totalHeight={30} 
+              totalWidth={200}
+              iconStyle={styles.iconStyle}
+              leftButtonBackgroundColor="#4B4B4B"
+              rightButtonBackgroundColor="#4B4B4B"
+            />
+          </View>
+          <Text style={styles.label}>Data</Text>
           <DatePickerApp date={datePicker} setDate={setDate} />
           <ButtonApp onPress={handleRegister} title="Cadastrar" />
         </View>
@@ -104,13 +113,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   inputText: {
-    height: 40,
-    width: 250,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: "93%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5
+  },
+  warranty: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   inputWarranty: {
     height: 40,
@@ -124,10 +146,31 @@ const styles = StyleSheet.create({
     color: "black",
   },
   inputNumeric: {
-    height: 40,
-    borderColor: "black",
-    borderWidth: 2,
-    borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: 60,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5
   },
+  label: {
+    color: "#4b4b4b",
+    width: "93%",
+    textAlign: "left"
+  },
+  iconStyle:{
+    backgroundColor: "#4b4b4b",
+    color: "white",
+    borderRadius: 5
+  }
 });

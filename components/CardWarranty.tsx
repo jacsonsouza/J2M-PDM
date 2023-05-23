@@ -60,8 +60,10 @@ export default CardWarranty;
 
 const styles = StyleSheet.create({
   card: {
+    margin: 5,
     backgroundColor: "#f0f0f0",
-    width: "100%",
+    padding: 5,
+    width: "97%",
     borderRadius: 2,
     borderLeftWidth: 10,
     borderColor: "#969696",
