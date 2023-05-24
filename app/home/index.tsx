@@ -66,7 +66,8 @@ export default function App() {
     modal.show(
       <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
+          <View style={styles.modal}>
+          
             <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
               <ButtonIcon
                 onPress={() => modal.hide()}
@@ -76,6 +77,8 @@ export default function App() {
                 widthButton={40}
               />
             </View>
+            <Text style={styles.title}>Editar informações do Serviço</Text>
+
             <KeyboardAwareScrollView>
               <Formik
                 initialValues={{
@@ -109,16 +112,19 @@ export default function App() {
               >
                 {({ handleChange, values, handleSubmit }) => (
                   <>
+                    <Text style={styles.label}>Cliente</Text>
                     <Input
                       onChange={handleChange("client")}
                       nameInput="Cliente"
                       value={values.client}
                     />
+                    <Text style={styles.label}>Serviço</Text>
                     <Input
                       onChange={handleChange("description")}
                       nameInput="Descrição"
                       value={values.description}
                     />
+                    <Text style={styles.label}>Valor do serviço</Text>
                     <MaskInput
                       value={values.price}
                       onChangeText={handleChange("price")}
@@ -126,28 +132,31 @@ export default function App() {
                       style={styles.input}
                       keyboardType="numeric"
                     />
-                    <Text style={{ alignSelf: "center" }}>
-                      Garantia (em dias):
-                    </Text>
+                    <Text style={styles.label}>Dias de Garantia</Text>
+                    <View style={styles.warranty}>
                     <NumericInput
-                      type="up-down"
                       onChange={() => handleChange("warranty")}
                       minValue={0}
-                      containerStyle={styles.inputNumber}
+                      inputStyle={styles.inputNumeric}
+                      totalHeight={30} 
+                      totalWidth={200}
+                      iconStyle={styles.iconStyle}
+                      leftButtonBackgroundColor="#4B4B4B"
+                      rightButtonBackgroundColor="#4B4B4B"
                       value={values.warranty}
                     />
+                  </View>
+                  <Text style={styles.label}>Status do serviço</Text>
                     <SelectDropdown
                       data={selectOptions}
                       onSelect={handleChange("status")}
                       defaultButtonText={values.status}
-                      buttonStyle={{
-                        borderStyle: "solid",
-                        borderRadius: 10,
-                        borderWidth: 2,
-                        alignSelf: "center",
-                      }}
+                      buttonStyle={styles.input}
+                      buttonTextStyle={{fontSize: 12, padding: 0}}
                     />
-                    <ButtonApp onPress={handleSubmit} title="Editar" />
+                    <View style={styles.containerButton}>
+                      <ButtonApp onPress={handleSubmit} title="Editar" />
+                    </View>
                   </>
                 )}
               </Formik>
@@ -219,6 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     height: "100%",
+    width: "100%"
   },
   loadScreen: {
     alignItems: "center",
@@ -234,13 +244,24 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   input: {
-    height: 40,
-    width: 250,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "white",
+    height: 30,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: "93%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5,
+    marginLeft: 8
   },
   inputNumber: {
     marginTop: 5,
@@ -248,4 +269,66 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderWidth: 2,
   },
+  modal: {
+    backgroundColor: "#d4d4d4",    
+    width: "100%",
+    height: "100%"
+  },
+  title:{
+    fontSize: 20,
+    width: "100%",
+    textAlign: "center",
+  },
+  label: {
+    color: "#4b4b4b",
+    width: "93%",
+    textAlign: "left",
+    paddingLeft: 8
+  },
+  warranty: {
+    flexDirection: "row",
+    textAlign: "center",
+    paddingLeft: 5,
+    marginBottom: 5,
+    width: "100%" 
+  },
+  inputWarranty: {
+    height: 40,
+    width: 130,
+    marginBottom: 12,
+    marginRight: 5,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "white",
+    color: "black",
+  },
+  inputNumeric: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: 60,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5
+  },
+  iconStyle:{
+    backgroundColor: "#4b4b4b",
+    color: "white",
+    borderRadius: 5
+  },
+  containerButton: {
+    width: "100%",
+    alignContent: "center",
+    marginLeft: 50
+  }
 });

@@ -5,6 +5,8 @@ import {
   Image,
   FlatList,
   RefreshControl,
+  Keyboard,
+  TextInput,
 } from "react-native";
 import DatePickerApp from "../../../components/DatePickerApp";
 import CardWarranty from "../../../components/CardWarranty";
@@ -15,6 +17,7 @@ import { useEffect, useState } from "react";
 
 import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
+import ButtonIcon from "../../../components/ButtonIcon";
 
 export default function Warranty() {
   const [date, setDate] = useState(new Date());
@@ -24,6 +27,19 @@ export default function Warranty() {
   const { loading, data, refreshData } = useCollection<Services>(
     "users/" + user?.uid + "/services"
   );
+
+  const [search, setSearch] = useState("");
+  const [searchResult, setSearchResult] = useState<Array<Services>>([]);
+
+  const handleSearch = () => {
+    Keyboard.dismiss();
+    const result = data.filter((service) => {
+      return service.client
+        .toLocaleLowerCase()
+        .includes(search.toLocaleLowerCase().trim());
+    });
+    setSearchResult(result);
+  };
 
   useEffect(() => {
     refreshData();
@@ -47,14 +63,28 @@ export default function Warranty() {
   return (
     <View style={styles.container}>
       <Header />
-
-      <DatePickerApp date={date} setDate={setDate} />
+      <View style={styles.search}>
+        <TextInput
+          onChangeText={setSearch}
+          style={styles.inputSearch}
+          placeholder="Busque pelo nome do Cliente..."
+          value={search}
+        />
+        <ButtonIcon
+          onPress={() => handleSearch()}
+          icon="search"
+          colorIcon={"white"}
+          colorButton={"black"}
+          widthButton={50}
+          size={30}
+        />
+      </View>
 
       <FlatList
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        data={data}
+        data={searchResult}
         renderItem={({ item }) => (
           <CardWarranty
             serviceNumber={item.serviceNumber}
@@ -82,5 +112,29 @@ const styles = StyleSheet.create({
   flatlist: {
     width: "100%",
     marginTop: 12,
+  },
+  inputSearch: {
+    height: 40,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: "85%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginLeft: 8
+  },
+  search: {
+    flexDirection: "row",
+    backgroundColor: "#d4d4d4",
+    alignItems: "center",
   },
 });

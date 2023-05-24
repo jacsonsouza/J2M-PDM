@@ -15,12 +15,11 @@ export default ButtonApp;
 
 const styles = StyleSheet.create({
   appButtonText: {
-    fontSize: 20,
+    fontSize: 16,
     color: "#fff",
-    fontFamily: "monospace",
   },
   appButtonContainer: {
-    elevation: 8,
+    elevation: 2,
     backgroundColor: "#4b4b4b",
     borderRadius: 10,
     paddingVertical: 10,
@@ -28,6 +27,12 @@ const styles = StyleSheet.create({
     width: "50%",
     alignItems: "center",
     margin: 20,
-    alignSelf: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
 });

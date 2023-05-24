@@ -25,18 +25,20 @@ export default function index() {
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../assets/img/logo.png")} />
+      <Text style={styles.label}>E-mail</Text>
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
-        placeholder="E-mail"
+        placeholder="Digite seu e-mail"
         value={email}
         autoCapitalize="none"
         inputMode="email"
       />
+      <Text style={styles.label}>Senha</Text>
       <TextInput
         style={styles.input}
         onChangeText={setPassword}
-        placeholder="Senha"
+        placeholder="Digite sua senha"
         value={password}
         autoCapitalize="none"
         secureTextEntry={true}
@@ -62,16 +64,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   input: {
-    height: 40,
-    width: 250,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 12,
+    padding: 2,
+    textAlign: "center",
+    width: "80%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5
   },
   logo: {
     height: 128,
     width: 128,
   },
+  label: {
+    color: "#4b4b4b",
+    width: "80%",
+    textAlign: "left"
+  }
 });
