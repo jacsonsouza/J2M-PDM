@@ -41,6 +41,7 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
 
   const [date, setDate] = useState(new Date());
+  const [daysWarranty, setDaysWarranty] = useState(0);
 
   const selectOptions = ["inProgress", "finished", "canceled", "paused"];
 
@@ -67,7 +68,6 @@ export default function App() {
       <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modal}>
-          
             <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
               <ButtonIcon
                 onPress={() => modal.hide()}
@@ -110,7 +110,7 @@ export default function App() {
                   ]);
                 }}
               >
-                {({ handleChange, values, handleSubmit }) => (
+                {({ handleChange, values, handleSubmit, setFieldValue }) => (
                   <>
                     <Text style={styles.label}>Cliente</Text>
                     <Input
@@ -134,25 +134,28 @@ export default function App() {
                     />
                     <Text style={styles.label}>Dias de Garantia</Text>
                     <View style={styles.warranty}>
-                    <NumericInput
-                      onChange={() => handleChange("warranty")}
-                      minValue={0}
-                      inputStyle={styles.inputNumeric}
-                      totalHeight={30} 
-                      totalWidth={200}
-                      iconStyle={styles.iconStyle}
-                      leftButtonBackgroundColor="#4B4B4B"
-                      rightButtonBackgroundColor="#4B4B4B"
-                      value={values.warranty}
-                    />
-                  </View>
-                  <Text style={styles.label}>Status do serviço</Text>
+                      <NumericInput
+                        valueType="integer"
+                        onChange={(value) => {
+                          setFieldValue("warranty", value);
+                        }}
+                        minValue={0}
+                        inputStyle={styles.inputNumeric}
+                        totalHeight={30}
+                        totalWidth={200}
+                        iconStyle={styles.iconStyle}
+                        leftButtonBackgroundColor="#4B4B4B"
+                        rightButtonBackgroundColor="#4B4B4B"
+                        value={values.warranty}
+                      />
+                    </View>
+                    <Text style={styles.label}>Status do serviço</Text>
                     <SelectDropdown
                       data={selectOptions}
                       onSelect={handleChange("status")}
                       defaultButtonText={values.status}
                       buttonStyle={styles.input}
-                      buttonTextStyle={{fontSize: 12, padding: 0}}
+                      buttonTextStyle={{ fontSize: 12, padding: 0 }}
                     />
                     <View style={styles.containerButton}>
                       <ButtonApp onPress={handleSubmit} title="Editar" />
@@ -228,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   loadScreen: {
     alignItems: "center",
@@ -261,7 +264,7 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-    marginLeft: 8
+    marginLeft: 8,
   },
   inputNumber: {
     marginTop: 5,
@@ -270,11 +273,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   modal: {
-    backgroundColor: "#d4d4d4",    
+    backgroundColor: "#d4d4d4",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
-  title:{
+  title: {
     fontSize: 20,
     width: "100%",
     textAlign: "center",
@@ -283,14 +286,14 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "93%",
     textAlign: "left",
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   warranty: {
     flexDirection: "row",
     textAlign: "center",
     paddingLeft: 5,
     marginBottom: 5,
-    width: "100%" 
+    width: "100%",
   },
   inputWarranty: {
     height: 40,
@@ -319,16 +322,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
-  iconStyle:{
+  iconStyle: {
     backgroundColor: "#4b4b4b",
     color: "white",
-    borderRadius: 5
+    borderRadius: 5,
   },
   containerButton: {
     width: "100%",
     alignContent: "center",
-    marginLeft: 50
-  }
+    marginLeft: 50,
+  },
 });

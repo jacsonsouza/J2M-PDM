@@ -6,7 +6,8 @@ type Services = {
   price: string;
   dateStart: string;
   daysWarranty: number;
-  status: string;
+  //status: string;
+  status: "inProgress" | "finished" | "canceled" | "paused";
 };
 
 export default Services;
