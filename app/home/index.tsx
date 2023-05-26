@@ -41,9 +41,8 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
 
   const [date, setDate] = useState(new Date());
-  const [daysWarranty, setDaysWarranty] = useState(0);
 
-  const selectOptions = ["inProgress", "finished", "canceled", "paused"];
+  const selectOptions = ["Em progresso", "Finalizado", "Cancelado", "Pausado"];
 
   if (loading) {
     return (
@@ -92,10 +91,10 @@ export default function App() {
                   const editService: Services = {
                     client: values.client,
                     description: values.description,
-                    serviceNumber: service.serviceNumber,
                     price: values.price,
                     dateStart: service.dateStart,
                     daysWarranty: values.warranty,
+                    brand: service.brand,
                     status: values.status,
                   };
                   await update(service.id + "", editService);
@@ -213,9 +212,9 @@ export default function App() {
             borderColor={item.status}
             onPress={() => handleShowModal(item)}
             onPressDelete={() => handleAlert(item)}
-            serviceNumber={item.serviceNumber}
-            client={item?.client}
-            description={item?.description}
+            brand={item.brand}
+            client={item.client}
+            description={item.description}
             price={item.price}
             date={item?.dateStart}
           />
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 12,
     padding: 2,
-    textAlign: "center",
+    alignSelf: "center",
     width: "93%",
     shadowColor: "#000",
     shadowOffset: {
@@ -289,8 +288,8 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   warranty: {
-    flexDirection: "row",
-    textAlign: "center",
+    flexDirection: "column",
+    alignItems: "center",
     paddingLeft: 5,
     marginBottom: 5,
     width: "100%",
