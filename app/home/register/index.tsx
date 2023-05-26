@@ -13,16 +13,16 @@ import MaskInput, { Masks } from "react-native-mask-input";
 import NumericInput from "react-native-numeric-input";
 import ButtonApp from "../../../components/ButtonApp";
 import Header from "../../../components/Header";
-import Services from "../../../types/Services";
+import Services from "../../../src/types/Services";
 import React, { useEffect, useState } from "react";
+import Brand from "../../../src/types/Brand";
+import SelectDropdown from "react-native-select-dropdown";
+import { useRouter } from "expo-router";
+
+import api from "../../../src/services/api";
 
 import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
-import { useRouter } from "expo-router";
-import axios from "axios";
-import Brand from "../../../types/Brand";
-import SelectDropdown from "react-native-select-dropdown";
-import api from "../../../src/services/api";
 
 export default function App() {
   const { user } = useAuth();
@@ -30,19 +30,13 @@ export default function App() {
     "users/" + user?.uid + "/services"
   );
 
-  const [objectBrands, setObjectBrands] = useState<Brand[]>([]);
-
-  const stringBrands: string[] = [];
-
-  objectBrands.forEach((value) => {
-    stringBrands.push(value.nome);
-  });
+  const [brands, setBrands] = useState<Brand[]>([]);
 
   useEffect(() => {
     api
       .get("/fipe/api/v1/carros/marcas")
       .then((response) => {
-        setObjectBrands(response.data);
+        setBrands(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -59,18 +53,17 @@ export default function App() {
 
   const handleRegister = async () => {
     await create({
-      serviceNumber: data.length + 1,
       client: client,
       description: description,
       price: currencyBrl,
       dateStart: datePicker.toISOString(),
       daysWarranty: days,
-      status: "inProgress",
+      brand: brand,
+      status: "Em progresso",
     });
     refreshData();
 
     Alert.alert("Serviço cadastrado! ", "", [
-
       {
         text: "Ok",
         onPress: () => router.push("/"),
@@ -113,27 +106,45 @@ export default function App() {
               onChange={setDays}
               minValue={0}
               inputStyle={styles.inputNumeric}
-              totalHeight={30} 
+              totalHeight={30}
               totalWidth={200}
               iconStyle={styles.iconStyle}
               leftButtonBackgroundColor="#4B4B4B"
               rightButtonBackgroundColor="#4B4B4B"
             />
           </View>
-          <Text style={styles.label}>Data</Text>
-
+          <Text style={styles.label}>Marcas</Text>
           <SelectDropdown
             search={true}
-            data={stringBrands}
-            onSelect={() => setBrand}
+            data={brands.map((values) => {
+              return values.nome;
+            })}
+            onSelect={(value) => {
+              setBrand(value);
+              console.log(value);
+            }}
             defaultButtonText={"Marcas"}
             buttonStyle={{
               borderStyle: "solid",
               borderRadius: 10,
               borderWidth: 2,
               alignSelf: "center",
+              margin: 5,
+              marginTop: 1,
+            }}
+            searchInputStyle={{
+              borderStyle: "solid",
+              borderWidth: 1,
+            }}
+            dropdownStyle={{
+              width: 180,
+              borderStyle: "solid",
+              borderRadius: 10,
+              borderWidth: 2,
+              alignSelf: "center",
             }}
           />
+          <Text style={styles.label}>Data</Text>
           <DatePickerApp date={datePicker} setDate={setDate} />
           <ButtonApp onPress={handleRegister} title="Cadastrar" />
         </View>
@@ -150,6 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#d4d4d4",
     alignItems: "center",
+    marginTop: 25,
   },
   inputText: {
     backgroundColor: "#fff",
@@ -167,7 +179,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
   warranty: {
     flexDirection: "row",
@@ -200,16 +212,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
   label: {
     color: "#4b4b4b",
     width: "93%",
-    textAlign: "left"
+    textAlign: "left",
   },
-  iconStyle:{
+  iconStyle: {
     backgroundColor: "#4b4b4b",
     color: "white",
-    borderRadius: 5
-  }
+    borderRadius: 5,
+  },
 });

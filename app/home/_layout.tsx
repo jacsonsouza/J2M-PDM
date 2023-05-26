@@ -44,6 +44,7 @@ export default function DefaultLayout() {
       <Tabs
         screenOptions={({ route }) => {
           return {
+            headerShown: false,
             tabBarIcon: ({ focused, size }) => {
               return (
                 <Ionicons

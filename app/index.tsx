@@ -1,7 +1,7 @@
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
 import ButtonApp from "../components/ButtonApp";
 import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useAuth from "../hooks/useAuth";
 
@@ -21,6 +21,12 @@ export default function index() {
       console.log("Erros! ", e);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -62,6 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 25,
   },
   input: {
     backgroundColor: "#fff",
@@ -79,7 +86,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
   logo: {
     height: 128,
@@ -88,6 +95,6 @@ const styles = StyleSheet.create({
   label: {
     color: "#4b4b4b",
     width: "80%",
-    textAlign: "left"
-  }
+    textAlign: "left",
+  },
 });
