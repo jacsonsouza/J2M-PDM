@@ -13,16 +13,16 @@ import MaskInput, { Masks } from "react-native-mask-input";
 import NumericInput from "react-native-numeric-input";
 import ButtonApp from "../../../components/ButtonApp";
 import Header from "../../../components/Header";
-import Services from "../../../types/Services";
+import Services from "../../../src/types/Services";
 import React, { useEffect, useState } from "react";
+import Brand from "../../../src/types/Brand";
+import SelectDropdown from "react-native-select-dropdown";
+import { useRouter } from "expo-router";
+
+import api from "../../../src/services/api";
 
 import useCollection from "../../../hooks/useCollection";
 import useAuth from "../../../hooks/useAuth";
-import { useRouter } from "expo-router";
-import axios from "axios";
-import Brand from "../../../types/Brand";
-import SelectDropdown from "react-native-select-dropdown";
-import api from "../../../src/services/api";
 
 export default function App() {
   const { user } = useAuth();
@@ -59,7 +59,7 @@ export default function App() {
       dateStart: datePicker.toISOString(),
       daysWarranty: days,
       brand: brand,
-      status: "inProgress",
+      status: "Em progresso",
     });
     refreshData();
 
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#d4d4d4",
     alignItems: "center",
+    marginTop: 25,
   },
   inputText: {
     backgroundColor: "#fff",

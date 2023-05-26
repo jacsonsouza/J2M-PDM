@@ -14,7 +14,7 @@ import Header from "../../../components/Header";
 import ButtonIcon from "../../../components/ButtonIcon";
 import useAuth from "../../../hooks/useAuth";
 import useCollection from "../../../hooks/useCollection";
-import Services from "../../../types/Services";
+import Services from "../../../src/types/Services";
 import CardService from "../../../components/CardService";
 import { useModal } from "../../../components/ModalProvider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#d4d4d4",
     alignItems: "center",
+    marginTop: 25,
   },
   flatlist: {
     width: "100%",

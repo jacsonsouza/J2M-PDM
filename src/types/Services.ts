@@ -8,7 +8,7 @@ type Services = {
   dateStart: string;
   daysWarranty: number;
   brand: string;
-  status: "inProgress" | "finished" | "canceled" | "paused";
+  status: "Em progresso" | "Finalizado" | "Cancelado" | "Pausado";
 };
 
 export default Services;

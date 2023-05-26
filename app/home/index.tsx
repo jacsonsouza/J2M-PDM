@@ -14,7 +14,7 @@ import CardService from "../../components/CardService";
 import { Formik } from "formik";
 import ButtonApp from "../../components/ButtonApp";
 import Header from "../../components/Header";
-import Services from "../../types/Services";
+import Services from "../../src/types/Services";
 import Input from "../../components/Input";
 import { useEffect, useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     width: "100%",
+    marginTop: 25,
   },
   loadScreen: {
     alignItems: "center",
