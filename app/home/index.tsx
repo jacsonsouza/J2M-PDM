@@ -9,7 +9,6 @@ import {
   Keyboard,
   Text,
 } from "react-native";
-import DatePickerApp from "../../components/DatePickerApp";
 import CardService from "../../components/CardService";
 import { Formik } from "formik";
 import ButtonApp from "../../components/ButtonApp";
