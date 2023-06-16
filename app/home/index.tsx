@@ -26,6 +26,7 @@ import useCollection from "../../hooks/useCollection";
 import useAuth from "../../hooks/useAuth";
 import ButtonIcon from "../../components/ButtonIcon";
 import { useModal } from "../../components/ModalProvider";
+import ModalFilter from "../../components/ModalFilter";
 
 export default function App() {
   const { user } = useAuth();
@@ -37,12 +38,15 @@ export default function App() {
   }, [user]);
 
   const modal = useModal();
-
+  const modalFilter = useModal();
   const [refreshing, setRefreshing] = useState(false);
-
-  const [date, setDate] = useState(new Date());
+  const [dataFilter, setDataFilter] = useState<Services[]>(data);
 
   const selectOptions = ["Em progresso", "Finalizado", "Cancelado", "Pausado"];
+
+  useEffect(() => {
+    setDataFilter(data);
+  }, [data]);
 
   if (loading) {
     return (
@@ -60,6 +64,16 @@ export default function App() {
     setRefreshing(true);
     refreshData();
     setRefreshing(false);
+  };
+
+  const handleFilterData = (filterStatus: string) => {
+    console.log(filterStatus);
+    const result = data.filter((service) => {
+      return service.status === filterStatus;
+    });
+    setDataFilter(result);
+
+    modalFilter.hide();
   };
 
   const handleShowModal = (service: Services) => {
@@ -185,13 +199,21 @@ export default function App() {
     ]);
   };
 
+  const handleFilter = () => {
+    modalFilter.show(
+      <ModalFilter
+        selectOptions={selectOptions}
+        handleFilterData={handleFilterData}
+      />
+    );
+  };
   return (
     <View style={styles.container}>
       <Header />
 
       <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
         <ButtonIcon
-          onPress={() => {}}
+          onPress={() => handleFilter()}
           icon={"options"}
           size={30}
           widthButton={50}
@@ -206,7 +228,7 @@ export default function App() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        data={data}
+        data={dataFilter}
         renderItem={({ item }) => (
           <CardService
             borderColor={item.status}
