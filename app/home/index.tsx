@@ -26,6 +26,7 @@ import useCollection from "../../hooks/useCollection";
 import useAuth from "../../hooks/useAuth";
 import ButtonIcon from "../../components/ButtonIcon";
 import { useModal } from "../../components/ModalProvider";
+import ModalFilter from "../../components/ModalFilter";
 
 export default function App() {
   const { user } = useAuth();
@@ -37,12 +38,15 @@ export default function App() {
   }, [user]);
 
   const modal = useModal();
-
+  const modalFilter = useModal();
   const [refreshing, setRefreshing] = useState(false);
-
-  const [date, setDate] = useState(new Date());
+  const [dataFilter, setDataFilter] = useState<Services[]>(data);
 
   const selectOptions = ["inProgress", "finished", "canceled", "paused"];
+
+  useEffect(() => {
+    setDataFilter(data);
+  }, [data]);
 
   if (loading) {
     return (
@@ -62,12 +66,21 @@ export default function App() {
     setRefreshing(false);
   };
 
+  const handleFilterData = (filterStatus: string) => {
+    console.log(filterStatus);
+    const result = data.filter((service) => {
+      return service.status === filterStatus;
+    });
+    setDataFilter(result);
+
+    modalFilter.hide();
+  };
+
   const handleShowModal = (service: Services) => {
     modal.show(
       <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modal}>
-          
             <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
               <ButtonIcon
                 onPress={() => modal.hide()}
@@ -134,25 +147,25 @@ export default function App() {
                     />
                     <Text style={styles.label}>Dias de Garantia</Text>
                     <View style={styles.warranty}>
-                    <NumericInput
-                      onChange={() => handleChange("warranty")}
-                      minValue={0}
-                      inputStyle={styles.inputNumeric}
-                      totalHeight={30} 
-                      totalWidth={200}
-                      iconStyle={styles.iconStyle}
-                      leftButtonBackgroundColor="#4B4B4B"
-                      rightButtonBackgroundColor="#4B4B4B"
-                      value={values.warranty}
-                    />
-                  </View>
-                  <Text style={styles.label}>Status do serviço</Text>
+                      <NumericInput
+                        onChange={() => handleChange("warranty")}
+                        minValue={0}
+                        inputStyle={styles.inputNumeric}
+                        totalHeight={30}
+                        totalWidth={200}
+                        iconStyle={styles.iconStyle}
+                        leftButtonBackgroundColor="#4B4B4B"
+                        rightButtonBackgroundColor="#4B4B4B"
+                        value={values.warranty}
+                      />
+                    </View>
+                    <Text style={styles.label}>Status do serviço</Text>
                     <SelectDropdown
                       data={selectOptions}
                       onSelect={handleChange("status")}
                       defaultButtonText={values.status}
                       buttonStyle={styles.input}
-                      buttonTextStyle={{fontSize: 12, padding: 0}}
+                      buttonTextStyle={{ fontSize: 12, padding: 0 }}
                     />
                     <View style={styles.containerButton}>
                       <ButtonApp onPress={handleSubmit} title="Editar" />
@@ -183,13 +196,21 @@ export default function App() {
     ]);
   };
 
+  const handleFilter = () => {
+    modalFilter.show(
+      <ModalFilter
+        selectOptions={selectOptions}
+        handleFilterData={handleFilterData}
+      />
+    );
+  };
   return (
     <View style={styles.container}>
       <Header />
 
       <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
         <ButtonIcon
-          onPress={() => {}}
+          onPress={() => handleFilter()}
           icon={"options"}
           size={30}
           widthButton={50}
@@ -204,7 +225,7 @@ export default function App() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        data={data}
+        data={dataFilter}
         renderItem={({ item }) => (
           <CardService
             borderColor={item.status}
@@ -228,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   loadScreen: {
     alignItems: "center",
@@ -261,7 +282,7 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-    marginLeft: 8
+    marginLeft: 8,
   },
   inputNumber: {
     marginTop: 5,
@@ -270,11 +291,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   modal: {
-    backgroundColor: "#d4d4d4",    
+    backgroundColor: "#d4d4d4",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
-  title:{
+  title: {
     fontSize: 20,
     width: "100%",
     textAlign: "center",
@@ -283,14 +304,14 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "93%",
     textAlign: "left",
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   warranty: {
     flexDirection: "row",
     textAlign: "center",
     paddingLeft: 5,
     marginBottom: 5,
-    width: "100%" 
+    width: "100%",
   },
   inputWarranty: {
     height: 40,
@@ -319,16 +340,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
-  iconStyle:{
+  iconStyle: {
     backgroundColor: "#4b4b4b",
     color: "white",
-    borderRadius: 5
+    borderRadius: 5,
   },
   containerButton: {
     width: "100%",
     alignContent: "center",
-    marginLeft: 50
-  }
+    marginLeft: 50,
+  },
 });
