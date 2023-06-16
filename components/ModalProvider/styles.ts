@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     height: "80%",
     margin: 8,
     padding: 8,
-    backgroundColor: "white",
+    backgroundColor: "#d4d4d4",
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "space-around",

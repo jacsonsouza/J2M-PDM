@@ -14,7 +14,7 @@ import Header from "../../../components/Header";
 import ButtonIcon from "../../../components/ButtonIcon";
 import useAuth from "../../../hooks/useAuth";
 import useCollection from "../../../hooks/useCollection";
-import Services from "../../../types/Services";
+import Services from "../../../src/types/Services";
 import CardService from "../../../components/CardService";
 import { useModal } from "../../../components/ModalProvider";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -57,7 +57,6 @@ export default function index() {
       <>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.modal}>
-          
             <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
               <ButtonIcon
                 onPress={() => modal.hide()}
@@ -82,9 +81,9 @@ export default function index() {
                   const editService: Services = {
                     client: values.client,
                     description: values.description,
-                    serviceNumber: service.serviceNumber,
                     price: values.price,
                     dateStart: service.dateStart,
+                    brand: service.brand,
                     daysWarranty: values.warranty,
                     status: values.status,
                   };
@@ -124,25 +123,25 @@ export default function index() {
                     />
                     <Text style={styles.label}>Dias de Garantia</Text>
                     <View style={styles.warranty}>
-                    <NumericInput
-                      onChange={() => handleChange("warranty")}
-                      minValue={0}
-                      inputStyle={styles.inputNumeric}
-                      totalHeight={30} 
-                      totalWidth={200}
-                      iconStyle={styles.iconStyle}
-                      leftButtonBackgroundColor="#4B4B4B"
-                      rightButtonBackgroundColor="#4B4B4B"
-                      value={values.warranty}
-                    />
-                  </View>
-                  <Text style={styles.label}>Status do serviço</Text>
+                      <NumericInput
+                        onChange={() => handleChange("warranty")}
+                        minValue={0}
+                        inputStyle={styles.inputNumeric}
+                        totalHeight={30}
+                        totalWidth={200}
+                        iconStyle={styles.iconStyle}
+                        leftButtonBackgroundColor="#4B4B4B"
+                        rightButtonBackgroundColor="#4B4B4B"
+                        value={values.warranty}
+                      />
+                    </View>
+                    <Text style={styles.label}>Status do serviço</Text>
                     <SelectDropdown
                       data={selectOptions}
                       onSelect={handleChange("status")}
                       defaultButtonText={values.status}
                       buttonStyle={styles.input}
-                      buttonTextStyle={{fontSize: 12, padding: 0}}
+                      buttonTextStyle={{ fontSize: 12, padding: 0 }}
                     />
                     <View style={styles.containerButton}>
                       <ButtonApp onPress={handleSubmit} title="Editar" />
@@ -198,10 +197,10 @@ export default function index() {
           <CardService
             borderColor={item.status}
             onPress={() => handleShowModal(item)}
-            serviceNumber={item.serviceNumber}
             client={item?.client}
             description={item?.description}
             price={item.price}
+            brand={item.brand}
             date={item?.dateStart}
             onPressDelete={() => handleAlert(item)}
           />
@@ -222,6 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#d4d4d4",
     alignItems: "center",
+    marginTop: 25,
   },
   flatlist: {
     width: "100%",
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginLeft: 8
+    marginLeft: 8,
   },
   input: {
     height: 30,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-    marginLeft: 8
+    marginLeft: 8,
   },
   inputNumber: {
     marginTop: 5,
@@ -273,11 +273,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   modal: {
-    backgroundColor: "#d4d4d4",    
+    backgroundColor: "#d4d4d4",
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
-  title:{
+  title: {
     fontSize: 20,
     width: "100%",
     textAlign: "center",
@@ -286,14 +286,14 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "93%",
     textAlign: "left",
-    paddingLeft: 8
+    paddingLeft: 8,
   },
   warranty: {
     flexDirection: "row",
     textAlign: "center",
     paddingLeft: 5,
     marginBottom: 5,
-    width: "100%" 
+    width: "100%",
   },
   inputWarranty: {
     height: 40,
@@ -322,16 +322,16 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
-  iconStyle:{
+  iconStyle: {
     backgroundColor: "#4b4b4b",
     color: "white",
-    borderRadius: 5
+    borderRadius: 5,
   },
   containerButton: {
     width: "100%",
     alignContent: "center",
-    marginLeft: 50
-  }
+    marginLeft: 50,
+  },
 });

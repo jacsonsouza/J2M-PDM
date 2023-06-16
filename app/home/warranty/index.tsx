@@ -11,7 +11,7 @@ import {
 import DatePickerApp from "../../../components/DatePickerApp";
 import CardWarranty from "../../../components/CardWarranty";
 import Header from "../../../components/Header";
-import Services from "../../../types/Services";
+import Services from "../../../src/types/Services";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
@@ -87,9 +87,9 @@ export default function Warranty() {
         data={searchResult}
         renderItem={({ item }) => (
           <CardWarranty
-            serviceNumber={item.serviceNumber}
             client={item.client}
             description={item.description}
+            brand={item.brand}
             dateEndWarranty={moment(item.dateStart).add(
               item.daysWarranty,
               "days"
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     height: "100%",
+    marginTop: 25,
   },
   flatlist: {
     width: "100%",
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginLeft: 8
+    marginLeft: 8,
   },
   search: {
     flexDirection: "row",

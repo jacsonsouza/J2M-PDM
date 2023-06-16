@@ -14,7 +14,7 @@ import CardService from "../../components/CardService";
 import { Formik } from "formik";
 import ButtonApp from "../../components/ButtonApp";
 import Header from "../../components/Header";
-import Services from "../../types/Services";
+import Services from "../../src/types/Services";
 import Input from "../../components/Input";
 import { useEffect, useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
@@ -42,7 +42,7 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
   const [dataFilter, setDataFilter] = useState<Services[]>(data);
 
-  const selectOptions = ["inProgress", "finished", "canceled", "paused"];
+  const selectOptions = ["Em progresso", "Finalizado", "Cancelado", "Pausado"];
 
   useEffect(() => {
     setDataFilter(data);
@@ -105,10 +105,10 @@ export default function App() {
                   const editService: Services = {
                     client: values.client,
                     description: values.description,
-                    serviceNumber: service.serviceNumber,
                     price: values.price,
                     dateStart: service.dateStart,
                     daysWarranty: values.warranty,
+                    brand: service.brand,
                     status: values.status,
                   };
                   await update(service.id + "", editService);
@@ -123,7 +123,7 @@ export default function App() {
                   ]);
                 }}
               >
-                {({ handleChange, values, handleSubmit }) => (
+                {({ handleChange, values, handleSubmit, setFieldValue }) => (
                   <>
                     <Text style={styles.label}>Cliente</Text>
                     <Input
@@ -148,7 +148,10 @@ export default function App() {
                     <Text style={styles.label}>Dias de Garantia</Text>
                     <View style={styles.warranty}>
                       <NumericInput
-                        onChange={() => handleChange("warranty")}
+                        valueType="integer"
+                        onChange={(value) => {
+                          setFieldValue("warranty", value);
+                        }}
                         minValue={0}
                         inputStyle={styles.inputNumeric}
                         totalHeight={30}
@@ -231,9 +234,9 @@ export default function App() {
             borderColor={item.status}
             onPress={() => handleShowModal(item)}
             onPressDelete={() => handleAlert(item)}
-            serviceNumber={item.serviceNumber}
-            client={item?.client}
-            description={item?.description}
+            brand={item.brand}
+            client={item.client}
+            description={item.description}
             price={item.price}
             date={item?.dateStart}
           />
@@ -250,6 +253,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     width: "100%",
+    marginTop: 25,
   },
   loadScreen: {
     alignItems: "center",
@@ -270,7 +274,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 12,
     padding: 2,
-    textAlign: "center",
+    alignSelf: "center",
     width: "93%",
     shadowColor: "#000",
     shadowOffset: {
@@ -307,8 +311,8 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
   },
   warranty: {
-    flexDirection: "row",
-    textAlign: "center",
+    flexDirection: "column",
+    alignItems: "center",
     paddingLeft: 5,
     marginBottom: 5,
     width: "100%",

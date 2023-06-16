@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#d4d4d4",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 25,
   },
   input: {
     backgroundColor: "#fff",
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
 
     elevation: 2,
-    marginBottom: 5
+    marginBottom: 5,
   },
   imgLogo: {
     height: 128,
@@ -99,6 +100,6 @@ const styles = StyleSheet.create({
   label: {
     color: "#4b4b4b",
     width: "80%",
-    textAlign: "left"
-  }
+    textAlign: "left",
+  },
 });

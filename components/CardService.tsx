@@ -1,26 +1,26 @@
-import { View, StyleSheet, Text, PressableProps } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ButtonIcon from "./ButtonIcon";
 import moment from "moment";
 
 interface CardServiceProps {
-  serviceNumber: number | undefined;
-  client: string | undefined;
-  description: string | undefined;
-  price: string | undefined;
-  date: string | undefined;
+  client: string;
+  description: string;
+  price: string;
+  date: string;
+  brand: string;
   onPress: Function;
   onPressDelete: Function;
   borderColor: string;
 }
 
 const CardService = ({
-  serviceNumber,
   client,
   description,
   price,
   date,
+  brand,
   onPress,
   onPressDelete,
   borderColor,
@@ -32,10 +32,10 @@ const CardService = ({
   };
 
   const StatusColors: StatusProps = {
-    finished: { color: "green" },
-    inProgress: { color: "#448bfc" },
-    canceled: { color: "red" },
-    paused: { color: "yellow" },
+    Finalizado: { color: "green" },
+    "Em progresso": { color: "#448bfc" },
+    Cancelado: { color: "red" },
+    Pausado: { color: "yellow" },
   };
 
   const colorStyles = {
@@ -48,7 +48,15 @@ const CardService = ({
 
   return (
     <View style={[styles.cardServico, colorStyles]}>
-      <Text style={[styles.title, colorTitle]}>#{serviceNumber}</Text>
+      <Text style={[styles.title, colorTitle]}>
+        <Ionicons
+          style={styles.icon}
+          name="person"
+          color={colorTitle.color}
+          size={18}
+        />
+        {client}
+      </Text>
       <View style={styles.info}>
         <Text style={styles.date}>
           <Ionicons
@@ -62,20 +70,15 @@ const CardService = ({
         </Text>
 
         <Text style={styles.price}>
-        <Ionicons style={styles.icon} name="cash" color="#4b4b4b" size={18} />
-        {price}
-      </Text>
+          <Ionicons style={styles.icon} name="cash" color="#4b4b4b" size={18} />
+          {price}
+        </Text>
       </View>
       <Text style={styles.infoService}>
-        <Ionicons
-          style={styles.icon}
-          name="people-circle-outline"
-          color="#4b4b4b"
-          size={18}
-        />
-        {client}
+        <Ionicons style={styles.icon} name="car" color="#4b4b4b" size={18} />
+        {brand}
       </Text>
-      
+
       <Text style={styles.description}>{description}</Text>
       <View style={styles.rowButton}>
         <ButtonIcon
@@ -138,13 +141,13 @@ const styles = StyleSheet.create({
   date: {
     color: "#4b4b4b",
     width: "50%",
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   price: {
     color: "#4b4b4b",
     width: "50%",
     textAlign: "right",
-    paddingRight: 5
+    paddingRight: 5,
   },
   icon: {
     marginRight: 5,
@@ -180,5 +183,5 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     marginBottom: 5,
     textAlign: "center",
-  }
+  },
 });

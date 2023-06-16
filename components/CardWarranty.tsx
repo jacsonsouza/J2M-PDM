@@ -3,16 +3,16 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import moment, { Moment } from "moment";
 
 interface CardWarrantyProps {
-  serviceNumber: number | undefined;
-  client: string | undefined;
-  description: string | undefined;
+  client: string;
+  description: string;
+  brand: string;
   dateEndWarranty: Moment;
 }
 
 const CardWarranty = ({
-  serviceNumber,
   client,
   description,
+  brand,
   dateEndWarranty,
 }: CardWarrantyProps) => {
   const daysRemaining = dateEndWarranty.diff(moment(new Date()), "days");
@@ -20,7 +20,16 @@ const CardWarranty = ({
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <Text style={styles.title}>#{serviceNumber}</Text>
+        <Text style={styles.title}>
+          {" "}
+          <Ionicons
+            style={styles.icon}
+            name="person"
+            color="#e0bd0d"
+            size={20}
+          />
+          {client}
+        </Text>
 
         <Text style={styles.Warranty}>
           <Ionicons
@@ -43,13 +52,8 @@ const CardWarranty = ({
         {daysRemaining} dias restantes
       </Text>
       <Text>
-        <Ionicons
-          style={styles.icon}
-          name="people-circle-outline"
-          color="#4b4b4b"
-          size={18}
-        />
-        {client}
+        <Ionicons style={styles.icon} name="car" color="#4b4b4b" size={18} />
+        {brand}
       </Text>
       <Text style={styles.description}>{description}</Text>
     </View>
