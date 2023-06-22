@@ -18,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import Brand from "../../../src/types/Brand";
 import SelectDropdown from "react-native-select-dropdown";
 import { useRouter } from "expo-router";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import api from "../../../src/services/api";
 
@@ -124,29 +125,22 @@ export default function App() {
               console.log(value);
             }}
             defaultButtonText={"Marcas"}
-            buttonStyle={{
-              borderStyle: "solid",
-              borderRadius: 10,
-              borderWidth: 2,
-              alignSelf: "center",
-              margin: 5,
-              marginTop: 1,
-            }}
-            searchInputStyle={{
-              borderStyle: "solid",
-              borderWidth: 1,
-            }}
-            dropdownStyle={{
-              width: 180,
-              borderStyle: "solid",
-              borderRadius: 10,
-              borderWidth: 2,
-              alignSelf: "center",
-            }}
+            buttonStyle={styles.inputText}
+            buttonTextStyle={{ fontSize: 14, padding: 0 }}
+            dropdownIconPosition="right"
+            renderDropdownIcon={() => <Ionicons
+              name="caret-down"
+              size={16}
+              color={"#4b4b4b"}
+            />}
+            dropdownStyle={styles.dropdown}
+            rowStyle={{height:35}}
           />
           <Text style={styles.label}>Data</Text>
           <DatePickerApp date={datePicker} setDate={setDate} />
-          <ButtonApp onPress={handleRegister} title="Cadastrar" />
+          <View style={{width:"93%"}}>
+            <ButtonApp onPress={handleRegister} title="Cadastrar" />
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
@@ -164,9 +158,10 @@ const styles = StyleSheet.create({
     marginTop: 25,
   },
   inputText: {
+    height: 35,
     backgroundColor: "#fff",
     borderRadius: 5,
-    fontSize: 12,
+    fontSize: 14,
     padding: 2,
     textAlign: "center",
     width: "93%",
@@ -218,10 +213,39 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "93%",
     textAlign: "left",
+    fontSize: 14
   },
   iconStyle: {
     backgroundColor: "#4b4b4b",
     color: "white",
     borderRadius: 5,
   },
+  input: {
+    height: 30,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 2,
+    textAlign: "center",
+    alignSelf: "center",
+    width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
+    marginBottom: 5,
+  },
+  dropdown: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 2,
+    textAlign: "center",
+    alignSelf: "center",
+  },  
 });
