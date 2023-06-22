@@ -60,9 +60,9 @@ export default function App() {
   const handleFilterData = (filterStatus: string) => {
     console.log(filterStatus);
     const result = data.filter((service) => {
-      if(filterStatus == "Todos"){
+      if (filterStatus == "Todos") {
         return service;
-      } 
+      }
       return service.status === filterStatus;
     });
     setDataFilter(result);
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "white",
-    height: "100%"
+    height: "100%",
   },
   gifLoad: {
     height: 200,

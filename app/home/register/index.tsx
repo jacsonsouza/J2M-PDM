@@ -128,17 +128,15 @@ export default function App() {
             buttonStyle={styles.inputText}
             buttonTextStyle={{ fontSize: 14, padding: 0 }}
             dropdownIconPosition="right"
-            renderDropdownIcon={() => <Ionicons
-              name="caret-down"
-              size={16}
-              color={"#4b4b4b"}
-            />}
+            renderDropdownIcon={() => (
+              <Ionicons name="caret-down" size={16} color={"#4b4b4b"} />
+            )}
             dropdownStyle={styles.dropdown}
-            rowStyle={{height:35}}
+            rowStyle={{ height: 35 }}
           />
           <Text style={styles.label}>Data</Text>
           <DatePickerApp date={datePicker} setDate={setDate} />
-          <View style={{width:"93%"}}>
+          <View style={{ width: "93%" }}>
             <ButtonApp onPress={handleRegister} title="Cadastrar" />
           </View>
         </View>
@@ -213,7 +211,7 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "93%",
     textAlign: "left",
-    fontSize: 14
+    fontSize: 14,
   },
   iconStyle: {
     backgroundColor: "#4b4b4b",
@@ -247,5 +245,5 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: "center",
     alignSelf: "center",
-  },  
+  },
 });

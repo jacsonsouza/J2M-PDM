@@ -129,9 +129,8 @@ export default function ModalEdit({
                   renderDropdownIcon={() => (
                     <Ionicons name="caret-down" size={16} color={"#4b4b4b"} />
                   )}
-                  
-        dropdownStyle={styles.dropdown}
-        rowStyle={{height:35}}
+                  dropdownStyle={styles.dropdown}
+                  rowStyle={{ height: 35 }}
                 />
                 <View style={styles.containerButton}>
                   <ButtonApp onPress={handleSubmit} title="Editar" />
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   label: {
     color: "#4b4b4b",
     textAlign: "left",
-    fontSize: 16
+    fontSize: 16,
   },
   warranty: {
     flexDirection: "column",
@@ -230,7 +229,7 @@ const styles = StyleSheet.create({
   containerButton: {
     width: "100%",
     alignSelf: "center",
-  }, 
+  },
   dropdown: {
     backgroundColor: "#fff",
     borderRadius: 5,
@@ -238,5 +237,5 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: "center",
     alignSelf: "center",
-  },  
+  },
 });

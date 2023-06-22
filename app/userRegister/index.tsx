@@ -63,7 +63,9 @@ export default function index() {
           Entre
         </Link>
       </View>
-      <ButtonApp onPress={handleRegister} title={"Cadastrar"} />
+      <View style={{ width: "80%" }}>
+        <ButtonApp onPress={handleRegister} title={"Cadastrar"} />
+      </View>
     </View>
   );
 }
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     borderRadius: 5,
-    fontSize: 12,
+    fontSize: 20,
     padding: 2,
     textAlign: "center",
     width: "80%",
@@ -101,5 +103,6 @@ const styles = StyleSheet.create({
     color: "#4b4b4b",
     width: "80%",
     textAlign: "left",
+    fontSize: 20,
   },
 });

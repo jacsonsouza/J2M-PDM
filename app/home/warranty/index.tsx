@@ -24,8 +24,8 @@ import ModalFilterWarranty from "../../../components/ModalFilterWarranty";
 export default function Warranty() {
   const [date, setDate] = useState(new Date());
   const [refreshing, setRefreshing] = useState(false);
-  
-  const selectOptions = ['30', '60', '90'];
+
+  const selectOptions = ["30", "60", "90"];
 
   const { user } = useAuth();
   const { loading, data, refreshData } = useCollection<Services>(
@@ -38,17 +38,24 @@ export default function Warranty() {
   const handleSearch = () => {
     Keyboard.dismiss();
     const result = data.filter((service) => {
-      if(service.client.toLocaleLowerCase().includes(search.toLocaleLowerCase().trim()) && (moment(service.dateStart).add(service.daysWarranty,"days").diff(moment(new Date()), "days") > 0) && (service.status == "Finalizado"))
+      if (
+        service.client
+          .toLocaleLowerCase()
+          .includes(search.toLocaleLowerCase().trim()) &&
+        moment(service.dateStart)
+          .add(service.daysWarranty, "days")
+          .diff(moment(new Date()), "days") > 0 &&
+        service.status == "Finalizado"
+      )
         return service;
     });
     setSearchResult(result);
   };
-  
 
   useEffect(() => {
     refreshData();
   }, [user]);
-  
+
   const modalFilterWarranty = useModal();
 
   if (loading) {
@@ -69,7 +76,12 @@ export default function Warranty() {
   const handleFilterData = (filterStatus: string) => {
     console.log(filterStatus);
     const result = data.filter((service) => {
-      return (moment(service.dateStart).add(service.daysWarranty,"days").diff(moment(new Date()), "days")) <= parseInt(filterStatus) && (service.status == "Finalizado");
+      return (
+        moment(service.dateStart)
+          .add(service.daysWarranty, "days")
+          .diff(moment(new Date()), "days") <= parseInt(filterStatus) &&
+        service.status == "Finalizado"
+      );
     });
     setSearchResult(result);
 
@@ -89,9 +101,7 @@ export default function Warranty() {
   return (
     <View style={styles.container}>
       <Header />
-      <View style={{ alignSelf: "flex-start", marginLeft: 10 }}>
-        
-      </View>
+      <View style={{ alignSelf: "flex-start", marginLeft: 10 }}></View>
       <View style={styles.search}>
         <TextInput
           onChangeText={setSearch}

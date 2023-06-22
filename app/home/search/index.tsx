@@ -24,6 +24,7 @@ import MaskInput, { Masks } from "react-native-mask-input";
 import NumericInput from "react-native-numeric-input";
 import SelectDropdown from "react-native-select-dropdown";
 import ButtonApp from "../../../components/ButtonApp";
+import ModalEdit from "../../../components/ModalEdit";
 
 export default function index() {
   const { user } = useAuth();
@@ -41,6 +42,7 @@ export default function index() {
   const modal = useModal();
 
   const handleSearch = () => {
+    refreshData();
     Keyboard.dismiss();
     const result = data.filter((service) => {
       return service.client
@@ -55,103 +57,11 @@ export default function index() {
   const handleShowModal = (service: Services) => {
     modal.show(
       <>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.modal}>
-            <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
-              <ButtonIcon
-                onPress={() => modal.hide()}
-                icon={"close"}
-                colorButton="red"
-                colorIcon="white"
-                widthButton={40}
-              />
-            </View>
-            <Text style={styles.title}>Editar informações do Serviço</Text>
-
-            <KeyboardAwareScrollView>
-              <Formik
-                initialValues={{
-                  client: service.client,
-                  description: service.description,
-                  price: service.price,
-                  warranty: service.daysWarranty,
-                  status: service.status,
-                }}
-                onSubmit={async (values) => {
-                  const editService: Services = {
-                    client: values.client,
-                    description: values.description,
-                    price: values.price,
-                    dateStart: service.dateStart,
-                    brand: service.brand,
-                    daysWarranty: values.warranty,
-                    status: values.status,
-                  };
-                  await update(service.id + "", editService);
-                  Alert.alert("Serviço Editado!", "", [
-                    {
-                      text: "Ok",
-                      onPress: () => {
-                        modal.hide();
-                        refreshData();
-                      },
-                    },
-                  ]);
-                }}
-              >
-                {({ handleChange, values, handleSubmit }) => (
-                  <>
-                    <Text style={styles.label}>Cliente</Text>
-                    <Input
-                      onChange={handleChange("client")}
-                      nameInput="Cliente"
-                      value={values.client}
-                    />
-                    <Text style={styles.label}>Serviço</Text>
-                    <Input
-                      onChange={handleChange("description")}
-                      nameInput="Descrição"
-                      value={values.description}
-                    />
-                    <Text style={styles.label}>Valor do serviço</Text>
-                    <MaskInput
-                      value={values.price}
-                      onChangeText={handleChange("price")}
-                      mask={Masks.BRL_CURRENCY}
-                      style={styles.input}
-                      keyboardType="numeric"
-                    />
-                    <Text style={styles.label}>Dias de Garantia</Text>
-                    <View style={styles.warranty}>
-                      <NumericInput
-                        onChange={() => handleChange("warranty")}
-                        minValue={0}
-                        inputStyle={styles.inputNumeric}
-                        totalHeight={30}
-                        totalWidth={200}
-                        iconStyle={styles.iconStyle}
-                        leftButtonBackgroundColor="#4B4B4B"
-                        rightButtonBackgroundColor="#4B4B4B"
-                        value={values.warranty}
-                      />
-                    </View>
-                    <Text style={styles.label}>Status do serviço</Text>
-                    <SelectDropdown
-                      data={selectOptions}
-                      onSelect={handleChange("status")}
-                      defaultButtonText={values.status}
-                      buttonStyle={styles.input}
-                      buttonTextStyle={{ fontSize: 12, padding: 0 }}
-                    />
-                    <View style={styles.containerButton}>
-                      <ButtonApp onPress={handleSubmit} title="Editar" />
-                    </View>
-                  </>
-                )}
-              </Formik>
-            </KeyboardAwareScrollView>
-          </View>
-        </TouchableWithoutFeedback>
+        <ModalEdit
+          modal={modal}
+          selectOptions={selectOptions}
+          service={service}
+        />
       </>
     );
   };

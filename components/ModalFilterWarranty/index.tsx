@@ -21,18 +21,19 @@ export default function ModalFilterWarranty({
   return (
     <View style={styles.modal}>
       <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
-          <ButtonIcon
-            onPress={() => modal.hide()}
-            icon={"close"}
-            colorButton="#4b4b4b"
-            colorIcon="white"
-            widthButton={40}
-          />
-        </View>
+        <ButtonIcon
+          onPress={() => modal.hide()}
+          icon={"close"}
+          colorButton="#4b4b4b"
+          colorIcon="white"
+          widthButton={40}
+        />
+      </View>
       <Text style={styles.title}>
-        Selecione a quantidade máxima de dias restantes de garantia que deseja visualizar.
+        Selecione a quantidade máxima de dias restantes de garantia que deseja
+        visualizar.
       </Text>
-      <SelectDropdown 
+      <SelectDropdown
         data={selectOptions}
         defaultButtonText="Selecionar quantidade de dias restantes"
         onSelect={(value) => {
@@ -44,7 +45,7 @@ export default function ModalFilterWarranty({
           <Ionicons name="caret-down" size={16} color={"#4b4b4b"} />
         )}
         dropdownStyle={styles.dropdown}
-        rowStyle={{height:35}}
+        rowStyle={{ height: 35 }}
       />
       <View style={styles.buttonFilter}>
         <ButtonApp
@@ -61,11 +62,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: "100%",
     textAlign: "justify",
-    marginBottom: 10
+    marginBottom: 10,
   },
   buttonFilter: {
     alignSelf: "center",
-    width:"100%"
+    width: "100%",
   },
   input: {
     height: 35,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-  },  
+  },
   modal: {
     backgroundColor: "#d4d4d4",
     width: "100%",
@@ -98,5 +99,5 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: "center",
     alignSelf: "center",
-  },  
+  },
 });

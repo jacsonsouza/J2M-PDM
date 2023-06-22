@@ -21,14 +21,14 @@ export default function ModalFilter({
   return (
     <View style={styles.modal}>
       <View style={{ alignSelf: "flex-end", marginBottom: 15 }}>
-          <ButtonIcon
-            onPress={() => modal.hide()}
-            icon={"close"}
-            colorButton="#4b4b4b"
-            colorIcon="white"
-            widthButton={40}
-          />
-        </View>
+        <ButtonIcon
+          onPress={() => modal.hide()}
+          icon={"close"}
+          colorButton="#4b4b4b"
+          colorIcon="white"
+          widthButton={40}
+        />
+      </View>
       <Text style={styles.title}>
         Selecione o status que deseja para filtrar os serviços listados.
       </Text>
@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     width: "100%",
     textAlign: "justify",
-    marginBottom: 10
+    marginBottom: 10,
   },
   buttonFilter: {
     alignSelf: "center",
-    width:"100%"
+    width: "100%",
   },
   input: {
     height: 30,

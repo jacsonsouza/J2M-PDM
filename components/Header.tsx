@@ -17,9 +17,9 @@ const AppButton = () => {
   };
   return (
     <View style={styles.header}>
-      <View style={{width: 50}}></View>
+      <View style={{ width: 50 }}></View>
       <Image style={styles.logo} source={require("../assets/img/logo.png")} />
-      <View style={{  }}>
+      <View style={{}}>
         <ButtonIcon
           onPress={handleLogout}
           icon={"log-out"}
