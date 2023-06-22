@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0.5,0.5,0.5,0.5)",
   },
   content: {
-    width: "80%",
-    height: "80%",
+    width: "90%",
+    minHeight: "25%",
     margin: 8,
     padding: 8,
     backgroundColor: "#d4d4d4",

@@ -18,6 +18,7 @@ import MaskInput, { Masks } from "react-native-mask-input";
 import NumericInput from "react-native-numeric-input";
 import SelectDropdown from "react-native-select-dropdown";
 import ButtonApp from "../ButtonApp";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface ModalEditProps {
   service: Services;
@@ -41,7 +42,7 @@ export default function ModalEdit({
           <ButtonIcon
             onPress={() => modal.hide()}
             icon={"close"}
-            colorButton="red"
+            colorButton="#4b4b4b"
             colorIcon="white"
             widthButton={40}
           />
@@ -124,7 +125,12 @@ export default function ModalEdit({
                   onSelect={handleChange("status")}
                   defaultButtonText={values.status}
                   buttonStyle={styles.input}
-                  buttonTextStyle={{ fontSize: 12, padding: 0 }}
+                  buttonTextStyle={{ fontSize: 16, padding: 0 }}
+                  renderDropdownIcon={() => (
+                    <Ionicons name="caret-down" size={16} color={"#4b4b4b"} />
+                  )}
+                  dropdownStyle={styles.dropdown}
+                  rowStyle={{ height: 35 }}
                 />
                 <View style={styles.containerButton}>
                   <ButtonApp onPress={handleSubmit} title="Editar" />
@@ -143,10 +149,11 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: "#fff",
     borderRadius: 5,
-    fontSize: 12,
+    fontSize: 16,
     padding: 2,
+    textAlign: "center",
     alignSelf: "center",
-    width: "93%",
+    width: "100%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -157,7 +164,6 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-    marginLeft: 8,
   },
   inputNumber: {
     marginTop: 5,
@@ -168,7 +174,6 @@ const styles = StyleSheet.create({
   modal: {
     backgroundColor: "#d4d4d4",
     width: "100%",
-    height: "100%",
   },
   title: {
     fontSize: 20,
@@ -177,9 +182,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: "#4b4b4b",
-    width: "93%",
     textAlign: "left",
-    paddingLeft: 8,
+    fontSize: 16,
   },
   warranty: {
     flexDirection: "column",
@@ -224,7 +228,14 @@ const styles = StyleSheet.create({
   },
   containerButton: {
     width: "100%",
-    alignContent: "center",
-    marginLeft: 50,
+    alignSelf: "center",
+  },
+  dropdown: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    fontSize: 16,
+    padding: 2,
+    textAlign: "center",
+    alignSelf: "center",
   },
 });

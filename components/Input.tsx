@@ -22,10 +22,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#fff",
     borderRadius: 5,
-    fontSize: 12,
+    fontSize: 16,
     padding: 2,
     textAlign: "center",
-    width: "93%",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -36,6 +35,5 @@ const styles = StyleSheet.create({
 
     elevation: 2,
     marginBottom: 5,
-    marginLeft: 8
   },
 });
