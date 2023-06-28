@@ -52,7 +52,7 @@ export default function index() {
     setSearchResult(result);
   };
 
-  const selectOptions = ["inProgress", "finished", "canceled", "paused"];
+  const selectOptions = ["Em progresso", "Finalizado", "Cancelado", "Pausado"];
 
   const handleShowModal = (service: Services) => {
     modal.show(
