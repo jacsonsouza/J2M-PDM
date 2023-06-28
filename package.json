@@ -24,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
     "react-native-date-picker": "^4.2.10",
+    "react-native-gesture-handler": "~2.9.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-mask-input": "^1.2.3",
     "react-native-numeric-input": "^1.9.1",
@@ -31,7 +32,7 @@
     "react-native-screens": "~3.20.0",
     "react-native-select-dropdown": "^3.3.3",
     "react-native-web": "~0.18.10",
-    "react-native-gesture-handler": "~2.9.0"
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

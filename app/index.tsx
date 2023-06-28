@@ -12,6 +12,7 @@ export default function index() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
@@ -19,6 +20,7 @@ export default function index() {
       router.push("/home");
     } catch (e) {
       console.log("Erros! ", e);
+      setError("E-mail ou senha inválido!");
     }
   };
 
@@ -49,6 +51,7 @@ export default function index() {
         autoCapitalize="none"
         secureTextEntry={true}
       />
+      {error && <Text style={{ fontSize: 15, color: "red" }}>{error}</Text>}
       <View style={{ flexDirection: "row" }}>
         <Text>Não tem uma conta? </Text>
         <Link href={"/userRegister"} style={{ color: "blue" }}>

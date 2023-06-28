@@ -11,9 +11,7 @@
       "resizeMode": "64x64",
       "backgroundColor": "#d4d4d4"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -23,7 +21,7 @@
         "foregroundImage": "./assets/img/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jhonathan16.j2m"
+      "package": "com.jacsondev.j2m"
     },
     "web": {
       "favicon": "./assets/img/logo.png",
@@ -32,7 +30,7 @@
     "scheme": "myapp",
     "extra": {
       "eas": {
-        "projectId": "2cdfe3b0-96b7-4e55-8d91-2f06429d12cf"
+        "projectId": "997f565c-0f7f-4299-b90d-782c5cc081f0"
       }
     }
   }

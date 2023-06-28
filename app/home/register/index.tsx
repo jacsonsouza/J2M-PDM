@@ -19,6 +19,7 @@ import Brand from "../../../src/types/Brand";
 import SelectDropdown from "react-native-select-dropdown";
 import { useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as yup from "yup";
 
 import api from "../../../src/services/api";
 
@@ -51,8 +52,33 @@ export default function App() {
   const [days, setDays] = useState(0);
   const [datePicker, setDate] = useState(new Date());
   const router = useRouter();
+  const [error, setError] = useState("");
+
+  const isValid = () => {
+    if (client === "") return false;
+    if (description === "") return false;
+    if (currencyBrl === "") return false;
+    if (brand === "") return false;
+    if (days === 0) return false;
+    if (datePicker === null) return false;
+
+    return true;
+  };
+
+  const onClean = () => {
+    setClient("");
+    setDescription("");
+    setCurrencyBrl("");
+    setDays(0);
+    setBrand("");
+    setDate(new Date());
+  };
 
   const handleRegister = async () => {
+    if (!isValid()) {
+      setError("Campo(s) não preenchido(s)!");
+      return;
+    }
     await create({
       client: client,
       description: description,
@@ -67,7 +93,9 @@ export default function App() {
     Alert.alert("Serviço cadastrado! ", "", [
       {
         text: "Ok",
-        onPress: () => router.push("/"),
+        onPress: () => {
+          onClean();
+        },
       },
     ]);
   };
@@ -136,6 +164,7 @@ export default function App() {
           />
           <Text style={styles.label}>Data</Text>
           <DatePickerApp date={datePicker} setDate={setDate} />
+          {error && <Text style={{ fontSize: 15, color: "red" }}>{error}</Text>}
           <View style={{ width: "93%" }}>
             <ButtonApp onPress={handleRegister} title="Cadastrar" />
           </View>
