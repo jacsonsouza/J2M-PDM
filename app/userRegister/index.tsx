@@ -1,20 +1,32 @@
 import { View, TextInput, StyleSheet, Text, Image } from "react-native";
 import ButtonApp from "../../components/ButtonApp";
 import { Link, useRouter } from "expo-router";
-import { useState } from "react";
+import * as yup from "yup";
 
 import useAuth from "../../hooks/useAuth";
+import { Formik } from "formik";
 
 export default function index() {
   const { login, register } = useAuth();
 
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPass, setConfrirmPass] = useState("");
+  const loginValidationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Entre com um e-mail válido!")
+      .required("E-mail é necessário!"),
+    password: yup
+      .string()
+      .min(8, ({ min }) => `Senha deve conter mais de ${min} caracteres!`)
+      .required("Senha é necessária!"),
+    confirmPass: yup
+      .string()
+      .oneOf([yup.ref("password")], "Senhas não correspondem!")
+      .required("Confirme sua senha!"),
+  });
 
-  const handleRegister = async () => {
+  const handleRegister = async (email: string, password: string) => {
     try {
       await register(email, password);
       await login(email, password);
@@ -30,42 +42,67 @@ export default function index() {
         style={styles.imgLogo}
         source={require("../../assets/img/logo.png")}
       />
-      <Text style={styles.label}>E-mail</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setEmail}
-        placeholder="Digite seu e-mail"
-        value={email}
-        autoCapitalize="none"
-        inputMode="email"
-      />
-      <Text style={styles.label}>Senha</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        placeholder="Digite sua Senha"
-        value={password}
-        autoCapitalize="none"
-        secureTextEntry={true}
-      />
-      <Text style={styles.label}>Confirmar senha</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setConfrirmPass}
-        placeholder="Por favor, confirme sua senha"
-        value={confirmPass}
-        autoCapitalize="none"
-        secureTextEntry={true}
-      />
-      <View style={{ flexDirection: "row" }}>
-        <Text>Já tem uma conta? </Text>
-        <Link href={"../"} style={{ color: "blue" }}>
-          Entre
-        </Link>
-      </View>
-      <View style={{ width: "80%" }}>
-        <ButtonApp onPress={handleRegister} title={"Cadastrar"} />
-      </View>
+      <Formik
+        validationSchema={loginValidationSchema}
+        initialValues={{ email: "", password: "", confirmPass: "" }}
+        onSubmit={(values) => {
+          handleRegister(values.email, values.password);
+        }}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
+          <>
+            <Text style={styles.label}>E-mail</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange("email")}
+              placeholder="Digite seu e-mail"
+              value={values.email}
+              autoCapitalize="none"
+              inputMode="email"
+            />
+            {errors.email && (
+              <Text style={{ fontSize: 15, color: "red" }}>{errors.email}</Text>
+            )}
+            <Text style={styles.label}>Senha</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange("password")}
+              placeholder="Digite sua Senha"
+              value={values.password}
+              autoCapitalize="none"
+              secureTextEntry={true}
+            />
+            {errors.password && (
+              <Text style={{ fontSize: 15, color: "red" }}>
+                {errors.password}
+              </Text>
+            )}
+            <Text style={styles.label}>Confirmar senha</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange("confirmPass")}
+              placeholder="Por favor, confirme sua senha"
+              value={values.confirmPass}
+              autoCapitalize="none"
+              secureTextEntry={true}
+            />
+            {errors.confirmPass && (
+              <Text style={{ fontSize: 15, color: "red" }}>
+                {errors.confirmPass}
+              </Text>
+            )}
+            <View style={{ flexDirection: "row" }}>
+              <Text>Já tem uma conta? </Text>
+              <Link href={"../"} style={{ color: "blue" }}>
+                Entre
+              </Link>
+            </View>
+            <View style={{ width: "80%" }}>
+              <ButtonApp onPress={handleSubmit} title={"Cadastrar"} />
+            </View>
+          </>
+        )}
+      </Formik>
     </View>
   );
 }
